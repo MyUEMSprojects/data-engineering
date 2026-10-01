@@ -1,0 +1,74 @@
+# Airflow 3 (LocalExecutor) + PostgreSQL (metadados do Airflow + warehouse do projeto).
+# Ambiente de ESTUDO: autenticação simplificada e segredos de exemplo — não use em produção.
+x-airflow-common: &airflow-common
+  build: .
+  user: "${AIRFLOW_UID:-50000}:0"
+  image: orders-airflow:local
+  environment: &airflow-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://de:de@postgres/airflow
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_ALL_ADMINS: "true"   # sem login (somente local)
+    AIRFLOW__API_AUTH__JWT_SECRET: dev-only-secret-change-me
+    # tolerância a desvio de relógio (WSL2/VMs "saltam" no tempo; ver README > Troubleshooting)
+    AIRFLOW__API_AUTH__JWT_LEEWAY: "300"
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-apiserver:8080/execution/
+    AIRFLOW__DAG_PROCESSOR__REFRESH_INTERVAL: "10"
+    PIPELINE_DATA_ROOT: /opt/airflow/data
+    WAREHOUSE_URI: postgresql://de:de@postgres:5432/warehouse
+    MAX_REJECT_RATE: "0.10"
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./include:/opt/airflow/include
+    - ./tests:/opt/airflow/tests
+    - ./data:/opt/airflow/data
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: de
+      POSTGRES_PASSWORD: de
+      POSTGRES_DB: airflow
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/init_warehouse.sql:/docker-entrypoint-initdb.d/10-warehouse.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U de -d airflow"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  airflow-init:
+    <<: *airflow-common
+    command: ["bash", "-c", "airflow db migrate"]
+    restart: "no"
+
+  airflow-apiserver:
+    <<: *airflow-common
+    command: ["api-server"]
+    ports: ["${AIRFLOW_PORT:-8080}:8080"]
+    depends_on:
+      airflow-init: {condition: service_completed_successfully}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/v2/version"]
+      interval: 10s
+      retries: 10
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: ["scheduler"]
+    depends_on:
+      airflow-init: {condition: service_completed_successfully}
+
+  airflow-dag-processor:
+    <<: *airflow-common
+    command: ["dag-processor"]
+    depends_on:
+      airflow-init: {condition: service_completed_successfully}
+
+volumes:
+  pgdata:
