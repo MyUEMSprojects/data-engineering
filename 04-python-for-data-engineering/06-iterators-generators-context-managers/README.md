@@ -125,7 +125,7 @@ def timer(nome):
     finally:
         print(f"{nome}: {time.perf_counter() - t0:.2f}s")
 
-with timer("ingestao"):
+with timer("ingestão"):
     rodar_etl()
 ```
 

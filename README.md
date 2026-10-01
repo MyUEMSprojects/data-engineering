@@ -248,12 +248,12 @@ objetivo, arquitetura, requisitos, execução, testes, decisões e trade-offs.
 | 02 | [Analytics Warehouse](projects/02-analytics-warehouse/README.md) | Modelagem dimensional + ELT + dbt |
 | 03 | [Orquestração](projects/03-orchestration/README.md) | Airflow + pipeline ponta a ponta |
 | 04 | [Data Quality](projects/04-data-quality/README.md) | Validação + testes + observabilidade |
-| 05 | [Data Lake](projects/05-data-lake/README.md) | Object storage + Parquet + partitioning |
+| 05 | [Data Lake](projects/05-data-lake/README.md) | Object storage S3 + Parquet + medalhão |
 | 06 | [Spark](projects/06-spark/README.md) | Processamento distribuído |
 | 07 | [Kafka](projects/07-kafka/README.md) | Producer → Kafka → consumer → storage |
 | 08 | [Streaming](projects/08-streaming/README.md) | Kafka → processamento streaming → analytics |
 | 09 | [Cloud](projects/09-cloud/README.md) | Pipeline completo em cloud + IaC |
-| 10 | [Capstone](projects/10-capstone/README.md) | Sistema completo (ingestão → lakehouse → BI) |
+| 10 | [Capstone](projects/10-capstone/README.md) | Delta lakehouse + ELT + qualidade + observabilidade + CI/CD |
 
 Ver o [índice de projetos](projects/README.md).
 
@@ -355,6 +355,7 @@ cada README):
 
 ---
 
-> **Status:** repositório em construção incremental. A auditoria de cobertura
-> (todos os diretórios com README, links válidos, projetos executáveis) é
-> rastreada em cada PR via [CI](.github/workflows/ci.yml).
+> **Status:** conteúdo completo — 31 módulos (cada diretório com README próprio), 10 projetos
+> executáveis (verificados em Docker) e exercícios por módulo. Validações automáticas no
+> [CI](.github/workflows/ci.yml): markdownlint, links relativos, e testes dos
+> [projetos](.github/workflows/projects.yml). Contribuições: veja o [CONTRIBUTING](CONTRIBUTING.md).
