@@ -1,7 +1,7 @@
 # Object storage (visão cloud)
 
 > 🟣 Cloud & Infra · Parte de [19 — Cloud](../README.md)
-
+>
 > Os **fundamentos** (objetos imutáveis, namespace plano, relação com lakes) estão em
 > [Data Lake / object storage](../../14-data-lake/02-object-storage/README.md). Aqui: a visão de
 > **serviço cloud** — classes, custo, controle de acesso e operação.

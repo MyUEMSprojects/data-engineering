@@ -33,6 +33,7 @@ out = (events.withWatermark("event_time", "2 minutes")
        .groupBy(F.window("event_time", "1 minute"), "page")
        .agg(F.count("*").alias("views")))
 ```
+
 A ordem importa: **watermark → dedup → agregação**. `dropDuplicates` sem watermark manteria estado para sempre. Implementado e verificado no [Projeto 08](../../projects/08-streaming/README.md).
 </details>
 

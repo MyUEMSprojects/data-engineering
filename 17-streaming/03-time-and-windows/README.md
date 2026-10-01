@@ -36,6 +36,7 @@ Formas de agrupar eventos em intervalos para agregar:
 ```text
 [00:00–00:05) [00:05–00:10) [00:10–00:15) ...   cada evento em exatamente uma janela
 ```
+
 Ex.: "total de vendas a cada 5 min".
 
 ### Sliding (deslizantes, com sobreposição)
@@ -43,6 +44,7 @@ Ex.: "total de vendas a cada 5 min".
 ```text
 [00:00–00:05) [00:01–00:06) [00:02–00:07) ...   um evento pode cair em várias janelas
 ```
+
 Ex.: "média móvel dos últimos 5 min, atualizada a cada 1 min".
 
 ### Session (sessão, por inatividade)

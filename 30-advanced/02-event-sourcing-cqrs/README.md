@@ -5,6 +5,7 @@
 ## Event Sourcing
 
 ### O que é
+
 Em vez de armazenar apenas o **estado atual** de uma entidade, armazena-se a **sequência imutável de
 eventos** que levaram a ele (`PedidoCriado`, `ItemAdicionado`, `PagamentoAprovado`...). O **estado é
 derivado** **reproduzindo (replay)** os eventos. O **log de eventos é a fonte da verdade**.
@@ -16,6 +17,7 @@ Event sourcing:     [PedidoCriado(7) → ItemAdicionado(7,x) → PagamentoAprova
 ```
 
 ### Por que
+
 - **Auditoria completa e nativa** — nada se perde (quem/quando/por quê).
 - **Time travel** — reconstruir o estado em qualquer instante; depurar "como chegamos aqui".
 - **Reprocessamento**: corrigir bug e **recomputar** projeções/derivados do log
@@ -25,6 +27,7 @@ Event sourcing:     [PedidoCriado(7) → ItemAdicionado(7,x) → PagamentoAprova
   [event-driven](../../17-streaming/02-event-driven-architecture/README.md).
 
 ### Como funciona
+
 - **Event store** (append-only): EventStoreDB, **Kafka** (com retenção longa/compactação), Postgres (tabela
   de eventos), DynamoDB. Cada evento: `aggregateId`, `tipo`, `payload`, `versão/sequência`, `timestamp`,
   metadados (causalidade, usuário).
@@ -37,6 +40,7 @@ Event sourcing:     [PedidoCriado(7) → ItemAdicionado(7,x) → PagamentoAprova
   schema exige cuidado ([schema evolution](../../08-data-formats/10-schema-evolution/README.md)).
 
 ### Custos e armadilhas
+
 - **Complexidade alta** (modelagem de eventos, projeções, consistência eventual).
 - **Evolução de eventos** (compatibilidade a longo prazo) — pior que evoluir tabelas.
 - **Consultas**: ler estado atual exige projeções; sem queries ad-hoc diretas no event store.
@@ -47,6 +51,7 @@ Event sourcing:     [PedidoCriado(7) → ItemAdicionado(7,x) → PagamentoAprova
 - Fácil de **over-engineer**: nem todo domínio precisa.
 
 ### Quando usar / não usar
+
 - **Use** em domínios onde **a história importa** (financeiro, pedidos, logística, compliance), auditoria
   forte, múltiplas visões, ou quando já se é fortemente orientado a eventos.
 - **Evite** em CRUD simples, times sem experiência, ou onde um **log de auditoria/CDC** resolve (você ganha
@@ -58,6 +63,7 @@ Event sourcing:     [PedidoCriado(7) → ItemAdicionado(7,x) → PagamentoAprova
 ## CQRS (Command Query Responsibility Segregation)
 
 ### O que é
+
 **Separar o modelo de escrita (comandos)** do **modelo de leitura (consultas)**. Escritas tratam **regras de
 negócio e consistência**; leituras são **otimizadas para consulta** (denormalizadas, indexadas, em outro
 store). Os dois são sincronizados por **eventos** (consistência eventual).
@@ -71,17 +77,20 @@ Consulta ───────────────────────�
 ```
 
 ### Por que
+
 - **Escalar leitura e escrita independentemente** (perfis opostos — lembra OLTP vs OLAP,
   [OLTP vs OLAP](../../01-foundations/07-oltp-vs-olap/README.md)).
 - **Modelos de leitura sob medida** para cada necessidade (relatórios, busca, telas).
 - Simplifica o modelo de escrita (foco em invariantes).
 
 ### Níveis de adoção
+
 1. **Mesmo banco**, modelos/camadas separados (leve).
 2. **Bancos separados**, sincronizados por eventos/CDC (consistência eventual).
 3. **CQRS + Event Sourcing** (combinação clássica — eventos alimentam as projeções).
 
 ### Custos
+
 Consistência eventual na leitura (read-your-writes — [replicação/consistência](../../06-databases/08-concurrency-consistency/README.md)),
 mais componentes, duplicação, complexidade operacional. **Não aplique por padrão.**
 

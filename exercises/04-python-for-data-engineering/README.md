@@ -21,6 +21,7 @@ def batched(it, n):
     while batch := list(islice(it, n)):
         yield batch
 ```
+
 Memória **constante** (um lote por vez). (Em Python ≥ 3.12 existe `itertools.batched`.) Ver [iteradores e geradores](../../04-python-for-data-engineering/06-iterators-generators-context-managers/README.md).
 </details>
 
@@ -32,6 +33,7 @@ def add_event(event, events=[]):
     return events
 print(add_event(1)); print(add_event(2))
 ```
+
 O que imprime e por quê? Corrija.
 
 <details><summary>Gabarito</summary>
@@ -62,6 +64,7 @@ def retry(times=3, base_delay=0.5, transient=(TimeoutError, ConnectionError)):
         return wrapper
     return deco
 ```
+
 O **jitter** evita que vários clientes tentem de novo ao mesmo tempo (*thundering herd*). Falha **permanente** (ex.: `ValueError`) não deve repetir — ver [falhas](../../09-etl-elt/11-handling-failures/README.md).
 </details>
 
@@ -96,6 +99,7 @@ def parse_order(d: dict) -> tuple[Order | None, list[str]]:
     except ValueError: od = None; errors.append("bad:order_date")
     return (None, errors) if errors else (Order(d["order_id"], amount, d["status"], od), [])
 ```
+
 Acumular erros dá **diagnóstico completo** por linha (como a quarentena do [Projeto 01](../../projects/01-basic-etl/README.md)). Para dinheiro, prefira `Decimal`.
 </details>
 

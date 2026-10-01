@@ -1,7 +1,7 @@
 # Ferramentas de catálogo e metadados
 
 > 🟣 Production · Parte de [27 — Catalog & Metadata](../README.md)
-
+>
 > Panorama para decisão — **não é endosso**. Funcionalidades, licenças e preços mudam rápido: confirme na
 > documentação oficial de cada ferramenta antes de decidir.
 
@@ -19,6 +19,7 @@
 ## Open source: comparação
 
 ### DataHub (LinkedIn → Acryl/DataHub Project)
+
 - **Arquitetura**: metadados como **eventos em Kafka** (Metadata Change Proposals) + armazenamento
   (MySQL/Postgres) + **Elasticsearch** (busca) + grafo; modelo extensível (aspectos).
 - **Pontos fortes**: lineage (inclusive column-level), ingestão ampla (recipes), **governança** (tags,
@@ -27,13 +28,15 @@
 - **Considerações**: infra mais pesada (Kafka, ES); curva de operação.
 
 ### OpenMetadata (Collate)
+
 - **Arquitetura**: API unificada + armazenamento (MySQL/Postgres) + Elasticsearch; **esquema de metadados
   padronizado** (JSON Schema); conectores/ingestão via workflows (Airflow embutido/externo).
 - **Pontos fortes**: UX moderna, **catálogo + lineage + qualidade de dados (testes embutidos) + observabilidade
-  + glossário/governança** num produto só; menos peças que o DataHub; muitos conectores.
+  - glossário/governança** num produto só; menos peças que o DataHub; muitos conectores.
 - **Considerações**: ecossistema/comunidade mais novos; avalie maturidade dos conectores que você precisa.
 
 ### Apache Atlas
+
 - **Origem**: ecossistema **Hadoop** (Hive, HBase, Kafka); gerencia metadados e **classificações**/tags e
   **lineage** nesse mundo; integra com **Apache Ranger** (políticas de acesso por tag).
 - **Pontos fortes**: forte em ambientes **Hadoop/on-prem**; modelo de tipos; classificação propagada por
@@ -42,6 +45,7 @@
   são menores; escolha usual quando já existe Hadoop/Cloudera.
 
 ### Amundsen
+
 - Foco em **discovery** (busca por popularidade), projeto da Lyft; simples. Comunidade menos ativa que as
   alternativas; avalie o estado atual antes de adotar.
 
@@ -110,9 +114,11 @@ sink:
   type: datahub-rest
   config: { server: "http://datahub-gms:8080" }
 ```
+
 ```bash
 datahub ingest -c recipe.yml          # agendar via orquestrador (Airflow/CronJob)
 ```
+
 (Confira a sintaxe exata na documentação da versão que você usar.)
 
 ## Erros comuns

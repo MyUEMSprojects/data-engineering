@@ -1,7 +1,7 @@
 # Compliance e privacidade
 
 > 🟣 Production · Parte de [25 — Data Governance](../README.md)
-
+>
 > Os controles técnicos de segurança e os detalhes da LGPD estão em
 > [26 — Security](../../26-security/README.md) e [LGPD](../../26-security/08-lgpd/README.md). Aqui: a visão
 > de **governança** — mapear obrigações regulatórias a práticas de dados.
@@ -30,6 +30,7 @@
 ## LGPD em resumo (visão do engenheiro)
 
 ### Conceitos
+
 - **Dado pessoal** — informação relacionada a pessoa natural identificada/identificável.
 - **Dado pessoal sensível** — origem racial/étnica, convicção religiosa/política, filiação sindical, saúde,
   vida sexual, genético/biométrico — **proteção reforçada**.
@@ -51,6 +52,7 @@
 | **Responsabilização e prestação de contas** | demonstrar conformidade (auditoria, registros) |
 
 ### Bases legais (art. 7º)
+
 Tratar dados exige uma **base legal** (consentimento, cumprimento de obrigação legal, execução de
 contrato, legítimo interesse, etc.). A base **limita a finalidade e a retenção**. Registre a base por
 dataset/finalidade (catálogo).
@@ -66,6 +68,7 @@ dataset/finalidade (catálogo).
 - **Revogação do consentimento**, informação sobre compartilhamento, **revisão de decisões automatizadas**.
 
 ### Incidentes e transferência
+
 - **Notificação** de incidente de segurança relevante à ANPD e aos titulares em prazo razoável
   ([incident response](../../24-observability/07-incident-response/README.md)).
 - **Transferência internacional** (ex.: nuvem fora do Brasil) exige mecanismos/garantias.
@@ -92,7 +95,7 @@ PII, restringir acesso por padrão, definir retenção no desenho do pipeline �
 
 1. **Inventário e mapeamento** (ROPA — registro das operações de tratamento): quais dados pessoais, onde,
    por quê, base legal, quem acessa, retenção, compartilhamento — alimentado pelo [catálogo](../02-metadata-catalog/README.md)
-   + [classificação](../05-access-control-classification/README.md) + [lineage](../03-lineage/README.md).
+   - [classificação](../05-access-control-classification/README.md) + [lineage](../03-lineage/README.md).
 2. **Controles técnicos** automatizados (acesso, mascaramento, criptografia, retenção, auditoria).
 3. **Processo de atendimento ao titular** (fluxo, SLAs, localizar/corrigir/excluir/exportar).
 4. **RIPD/DPIA** (Relatório de Impacto) para tratamentos de alto risco (ML, dados sensíveis).

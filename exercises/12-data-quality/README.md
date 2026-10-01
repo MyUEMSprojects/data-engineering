@@ -22,6 +22,7 @@ SELECT order_id, COUNT(*) FROM orders GROUP BY order_id HAVING COUNT(*) > 1;    
 SELECT o.* FROM orders o LEFT JOIN customers c USING (customer_id) WHERE c.customer_id IS NULL;      -- relationships
 SELECT * FROM orders WHERE amount < 0;                                                               -- validade
 ```
+
 É o formato dos *singular tests* do dbt: **teste = consulta que deve retornar 0 linhas**. Ver [dbt tests](../../12-data-quality/06-dbt-tests/README.md).
 </details>
 
@@ -67,5 +68,6 @@ def split(rows, validate):
     assert len(ok) + len(bad) == len(rows)   # conservação: nada some
     return ok, bad
 ```
+
 Propriedade: **`válidas + rejeitadas = lidas`**. Teste com *property-based testing* (Hypothesis) e entradas aleatórias. Ver [expectation testing](../../12-data-quality/04-expectation-testing/README.md).
 </details>

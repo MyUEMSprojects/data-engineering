@@ -48,6 +48,7 @@ spec:
               image: registry.example.com/etl:1.4.2     # tag imutável
               resources: {requests: {cpu: "500m", memory: 1Gi}, limits: {memory: 2Gi}}
 ```
+
 </details>
 
 ## 4. 🔵 Debugging — Pod em CrashLoopBackOff / OOMKilled

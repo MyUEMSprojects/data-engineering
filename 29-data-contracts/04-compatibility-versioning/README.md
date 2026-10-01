@@ -1,7 +1,7 @@
 # Compatibilidade e versionamento
 
 > 🟣 Advanced · Parte de [29 — Data Contracts](../README.md)
-
+>
 > Base conceitual em [schema evolution](../../08-data-formats/10-schema-evolution/README.md) e
 > [versionamento/SemVer](../../03-git-software-engineering/04-conventional-commits-versioning/README.md).
 > Aqui: aplicação a **contratos de dados** de ponta a ponta.
@@ -89,6 +89,7 @@ Elementos do processo:
 | **Parquet/arquivos** | evolução por **nome/ID de coluna** ([Iceberg](../../15-lakehouse/05-apache-iceberg/README.md) por ID); cuidado com reordenar/renomear |
 
 ### View estável como "interface pública"
+
 Exponha aos consumidores uma **view/camada pública versionada** (`analytics.orders_v1`) sobre o modelo
 interno, que pode **refatorar livremente** — a view é o **contrato**; absorve mudanças internas
 ([views](../../05-sql/06-views-materialized-views/README.md)).

@@ -34,11 +34,13 @@ columns:
   - {name: customer_id, pii: true, description: "Identificador pseudonimizado"}
   - {name: lifetime_revenue, pii: false, description: "Soma de pedidos não cancelados"}
 ```
+
 ```python
 import sys, yaml, pathlib
 bad = [p for p in pathlib.Path("catalog").glob("*.yml") if not yaml.safe_load(p.read_text()).get("owner")]
 sys.exit(f"sem dono: {bad}" if bad else 0)
 ```
+
 </details>
 
 ## 4. 🔵 Conceitual — Linhagem de coluna

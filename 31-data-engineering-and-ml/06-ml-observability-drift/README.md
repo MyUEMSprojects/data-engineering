@@ -28,30 +28,36 @@ um modelo pode estar "no ar, rápido e sem erros" e **estar errado**.
 **Drift** = mudança ao longo do tempo que **degrada** a adequação do modelo.
 
 ### 1. Data drift / covariate shift — P(X) muda
+
 A **distribuição das features de entrada** muda em relação ao treino (ex.: novo perfil de clientes, mudança de
 canal, sazonalidade, mudança de sensor/unidade). A relação X→Y pode ainda valer, mas o modelo vê regiões do
 espaço que não conhecia.
 
 ### 2. Concept drift — P(Y|X) muda
+
 A **relação entre features e alvo** muda (ex.: o que indica fraude evolui; comportamento pós-pandemia).
 O modelo **fica errado mesmo com inputs "normais"**. Variantes: **súbito**, **gradual**, **incremental**,
 **recorrente/sazonal**.
 
 ### 3. Label/prior drift — P(Y) muda
+
 A proporção das classes muda (ex.: taxa de fraude aumenta).
 
 ### 4. Feature/schema drift (operacional)
+
 Mudanças **upstream** quebram/alteram features: coluna renomeada, unidade trocada, valores nulos, atraso de
 dados, bug de pipeline — **não é "o mundo mudou", é dado quebrado** (resolver com
 [qualidade](../../12-data-quality/README.md) e [contratos](../../29-data-contracts/README.md)).
 
 ### 5. Training-serving skew
+
 Diferença **sistemática** entre as features no treino e no serving (lógica diferente, dados faltando online)
 — ver [feature stores](../03-feature-stores-online-offline/README.md).
 
 ## Como detectar
 
 ### Sem ground truth (imediato) — monitorar **distribuições**
+
 Compare a distribuição **atual (janela recente)** com a **referência** (dados de treino ou janela estável):
 
 | Técnica | Para |
@@ -69,6 +75,7 @@ Aplique a **features**, **predições** e (quando possível) **embeddings**. Cui
 feature**.
 
 ### Com ground truth (atrasado) — monitorar **performance**
+
 Quando os rótulos reais chegam (às vezes dias/meses depois — churn, inadimplência), calcule as métricas e
 acompanhe a **degradação**. Requer **pipeline de feedback**: juntar predição (com `request_id`/`model_version`)
 ao desfecho real ([serving: logging](../05-model-serving/README.md)).
@@ -86,6 +93,7 @@ Ground truth (tardio) ─► join por request_id ──────────�
                                                                            ▼
               Jobs de monitoramento (batch/streaming): drift, qualidade, performance ─► métricas/dashboards ─► ALERTAS ─► ação
 ```
+
 - Reutilize a **plataforma de dados**: logs no lake ([lakehouse](../../15-lakehouse/README.md)), jobs
   agendados ([orquestração](../../11-orchestration/README.md)), métricas no Prometheus/warehouse, alertas
   ([alertas](../../24-observability/04-alerting/README.md)).
@@ -109,6 +117,7 @@ Detectou drift/degradação
    ├─ Concept drift grave? ────────► redesenhar features/modelo; reavaliar o problema
    └─ Crítico? ────────────────────► fallback (modelo anterior/regra), degradar com segurança, escalar incidente
 ```
+
 - **Retreino**: agendado, por gatilho de drift/performance, com **validação e gates**
   ([training pipelines](../04-training-pipelines/README.md)); cuidado com **feedback loops** (o modelo
   influencia os dados que depois treinam o próprio modelo).

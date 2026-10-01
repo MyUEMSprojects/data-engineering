@@ -50,6 +50,7 @@ def write_atomic(path: str, data: bytes) -> None:
         if os.path.exists(tmp): os.remove(tmp)
         raise
 ```
+
 Quem lê vê **ou o arquivo antigo ou o novo completo**, nunca o meio. Em S3, o `PUT` já é atômico por objeto. Ver [checkpoints/idempotência](../../10-data-pipelines/04-checkpoints-idempotency/README.md).
 </details>
 

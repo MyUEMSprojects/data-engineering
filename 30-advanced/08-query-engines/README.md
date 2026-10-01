@@ -53,6 +53,7 @@ JOIN postgresql.crm.clientes c ON c.id = p.cliente_id   -- Postgres operacional 
 WHERE p.dt >= DATE '2024-01-01'
 GROUP BY c.uf;
 ```
+
 ANSI SQL com extensões; suporta window functions, CTEs, funções JSON/array, `MERGE`/`UPDATE`/`DELETE` em
 tabelas lakehouse (Iceberg/Delta) conforme conector/versão.
 

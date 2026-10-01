@@ -63,6 +63,7 @@ LEFT JOIN LATERAL (
   ORDER BY f.feature_ts DESC LIMIT 1
 ) f ON true;
 ```
+
 (Equivalente com `ASOF JOIN` em engines que o suportam, ou *window functions* — ver
 [SQL analítico](../../05-sql/13-analytical-sql/README.md).) **Feature stores** automatizam isso
 ([feature stores](../03-feature-stores-online-offline/README.md)). Dimensões **SCD2**

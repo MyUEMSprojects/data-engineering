@@ -25,6 +25,7 @@ Itens **semanticamente parecidos** ficam **próximos** no espaço vetorial.
 ```
 
 ### Métricas de similaridade/distância
+
 - **Cosseno** (ângulo; comum p/ texto), **produto interno (dot)**, **distância euclidiana (L2)**.
 - Normalizar vetores torna cosseno ≈ dot product. A métrica deve **corresponder** à usada no treino do modelo.
 

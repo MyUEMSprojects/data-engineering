@@ -21,6 +21,7 @@ Fontes ─► pipelines ─► OFFLINE store (lake/warehouse)  ──materializa
 ## Os dois "lados" da feature store
 
 ### Offline store
+
 - Armazena **histórico** completo de features (por entidade e **timestamp**), em
   [lake/warehouse](../../14-data-lake/README.md)/[lakehouse](../../15-lakehouse/README.md) — Parquet/Iceberg/
   Delta/BigQuery/Snowflake.
@@ -30,6 +31,7 @@ Fontes ─► pipelines ─► OFFLINE store (lake/warehouse)  ──materializa
   ([point-in-time](../01-ml-data-pipelines/README.md)).
 
 ### Online store
+
 - Armazena o **valor mais recente** de cada feature **por entidade**, num **key-value de baixa latência**
   (Redis, DynamoDB, Cassandra/ScyllaDB, Bigtable, Postgres): lookups em **milissegundos** por chave
   ([key-value](../../06-databases/04-nosql/01-key-value/README.md)).
@@ -52,6 +54,7 @@ Treino:  features calculadas em SQL/Spark sobre o histórico
 Serving: features reimplementadas no app (outra lógica, outra janela, outro bug) → distribuição diferente
 Resultado: modelo bom offline, ruim em produção
 ```
+
 A feature store impõe **uma definição única** executada para ambos os lados, e valida/monitora a
 consistência (comparar distribuições treino vs serving — [drift](../06-ml-observability-drift/README.md)).
 
@@ -87,6 +90,7 @@ vec = store.get_online_features(
     entity_rows=[{"cliente_id": "C-7"}],
 ).to_dict()
 ```
+
 (Nomes/APIs variam por versão — consulte a documentação do Feast/ferramenta.)
 
 ## Ferramentas (panorama, não endosso)

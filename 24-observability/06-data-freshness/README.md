@@ -56,6 +56,7 @@ sources:
           warn_after:  {count: 6,  period: hour}
           error_after: {count: 12, period: hour}
 ```
+
 `dbt source freshness` ([dbt tests/sources](../../28-dbt/03-sources-seeds/README.md)).
 
 ```python

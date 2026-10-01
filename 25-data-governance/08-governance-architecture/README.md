@@ -12,15 +12,20 @@ como se integram ao fluxo de engenharia.
 ## Dimensão organizacional
 
 ### Centralizada
+
 Um **time central** define e aplica as regras e geralmente também detém/curando os dados.
+
 - ✅ Consistência, controle forte, simples de começar.
 - ❌ **Gargalo** (tudo passa pelo time central), distante do contexto de negócio, não escala.
 
 ### Descentralizada (sem coordenação)
+
 Cada área governa por conta própria.
+
 - ✅ Rápido localmente. ❌ Silos, padrões divergentes, risco regulatório, "dados que não conversam".
 
 ### Federada (o equilíbrio moderno)
+
 **Padrões e plataforma globais** (políticas, segurança, interoperabilidade) + **responsabilidade e execução
 nos domínios** (donos de dados de cada área). É o modelo do [data mesh](../../30-advanced/03-data-mesh/README.md):
 *federated computational governance*.

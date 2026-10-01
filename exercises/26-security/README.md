@@ -18,6 +18,7 @@ Um `.env` com a senha do banco foi commitado e enviado. Liste a **sequência cor
 <details><summary>Gabarito</summary>
 
 1) **Revogar/rotacionar** a credencial **agora**; 2) verificar uso indevido (logs); 3) remover do repositório e, se necessário, limpar o histórico (`git filter-repo`) — sabendo que cópias podem existir; 4) adicionar `.env` ao `.gitignore` e *secret scanning* no CI; 5) migrar para cofre/variáveis de ambiente. Reescrever histórico **não** invalida o segredo vazado. Ver [segredos](../../26-security/04-secrets-management/README.md).
+
 </details>
 
 ## 3. 🔵 Implementação — Política IAM de menor privilégio
@@ -31,6 +32,7 @@ Escreva uma política que permita a um job **ler** `s3://raw/incoming/*` e **esc
  {"Effect":"Allow","Action":"s3:GetObject","Resource":"arn:aws:s3:::raw/incoming/*"},
  {"Effect":"Allow","Action":"s3:PutObject","Resource":"arn:aws:s3:::curated/curated/*"}]}
 ```
+
 Não use `Action: "*"`, `Resource: "*"`, nem `s3:*`. Teste com o simulador do [Projeto 09](../../projects/09-cloud/src/policylint/iam_sim.py). Ver [menor privilégio](../../26-security/06-least-privilege/README.md).
 </details>
 
@@ -48,6 +50,7 @@ SELECT customer_id,
        country
 FROM raw.customers;
 ```
+
 (Ajuste a máscara à regra da empresa.) Mais forte: **tokenização/pseudonimização** com chave em cofre (reversível só por quem precisa), ou **mascaramento dinâmico** por papel no warehouse. Ver [mascaramento de PII](../../26-security/07-data-masking-pii/README.md).
 </details>
 

@@ -1,7 +1,7 @@
 # Metadados e catálogo (visão de governança)
 
 > 🟣 Production · Parte de [25 — Data Governance](../README.md)
-
+>
 > Detalhes de tipos de metadados, discovery e ferramentas estão em
 > [27 — Data Catalog & Metadata](../../27-data-catalog-metadata/README.md). Aqui: o **papel na
 > governança**.

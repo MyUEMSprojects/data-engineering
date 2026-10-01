@@ -21,6 +21,7 @@ e **gestão de modelos** — para construir, implantar, monitorar e **retreinar*
 Dados ─► Features ─► Treino ─► Avaliação ─► Registro ─► Deploy ─► Serving ─► Monitoramento ─┘
 (DE)      (DE/MLE)   (MLE/DS)   (gates)     (registry)   (CD)     (MLE)     (drift/perf) → retreino
 ```
+
 Cada seta é **automatizada, versionada e observada**.
 
 ## Os três "CI/CD" do ML (CI / CD / CT)
@@ -64,6 +65,7 @@ Archived`).
 Treino ─► registra modelo v13 (Staging) ─► testes de integração/shadow/canary ─► aprovação ─► Production ─► v12 → Archived
                                                   └─ falhou? permanece/rollback para v12
 ```
+
 Promoção com **gates automáticos + aprovação humana** quando o risco justificar
 ([estratégias de deploy](../../23-cicd-dataops/06-deployment-strategies/README.md)).
 
@@ -123,6 +125,7 @@ Nível 1: pipeline de treino automatizado, tracking e registry, serving versiona
 Nível 2: CI/CD do pipeline + CT acionado por dados/drift, feature store, validação automática de dados e modelo, canary/shadow
 Nível 3: plataforma self-service, governança/fairness automatizada, otimização de custo, multi-modelo em escala
 ```
+
 Evolua **incrementalmente**, guiado por incidentes e gargalos reais (não por ferramentas da moda).
 
 ## Anti-padrões

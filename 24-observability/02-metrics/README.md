@@ -54,21 +54,26 @@ LAST_OK.labels("vendas").set_to_current_time()
 ## Métricas essenciais para plataformas de dados
 
 ### Infra/serviços
+
 CPU, memória, disco, rede; OOMKills/restarts ([K8s](../../21-kubernetes/08-observability/README.md)); conexões/
 IOPS/replication lag de bancos ([managed DBs](../../19-cloud/04-managed-databases/README.md)).
 
 ### Pipelines
+
 Taxa de sucesso/falha de runs, **duração** (e tendência), retries, tarefas na fila, atraso vs SLA.
 
 ### Dados
+
 **Volume** (linhas/bytes por run), **frescor** (idade do dado), % de nulos, rejeitados, duplicatas,
 resultados de testes de qualidade ([data quality](../../12-data-quality/README.md)).
 
 ### Streaming/brokers
+
 **Consumer lag**, throughput in/out, tamanho de estado, checkpoint duration, backpressure
 ([backpressure](../../18-message-brokers/06-backpressure/README.md)).
 
 ### Custo
+
 Bytes processados/créditos por pipeline ([cost](../../19-cloud/08-cost-management/README.md)).
 
 ## Métodos de organização
@@ -87,7 +92,9 @@ cardinalidade (`table`, `stage`, `env`); IDs vão para [logs/traces](../01-loggi
 ## Dashboards
 
 Poucos e **focados em perguntas** ("os dados de hoje estão prontos? o pipeline está saudável?"): estado atual
-+ tendência + SLO. Evite painéis infinitos que ninguém olha. Dashboard por **audiência** (engenheiro vs
+
+- tendência + SLO. Evite painéis infinitos que ninguém olha. Dashboard por **audiência** (engenheiro vs
+
 consumidor de dados).
 
 ## Erros comuns

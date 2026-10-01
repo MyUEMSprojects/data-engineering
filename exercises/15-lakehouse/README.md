@@ -33,6 +33,7 @@ ON t.order_id = s.order_id
 WHEN MATCHED AND s.updated_at > t.updated_at THEN UPDATE SET *
 WHEN NOT MATCHED THEN INSERT *;
 ```
+
 Reexecutar o mesmo lote não altera os dados (predicado estrito `>`). Mesma lógica do [Projeto 10](../../projects/10-capstone/README.md) em Python (`deltalake`).
 </details>
 
@@ -68,5 +69,6 @@ python -m capstone ops restore --version 2             # rollback (cria uma NOVA
 python -m capstone run --ds 2024-03-05                 # reaplica o dia: MERGE idempotente
 python -m capstone ops history                         # a versão mais recente = o estado final; confira as linhas com `ops version`
 ```
+
 Nota: `restore` **não apaga o histórico** — ele cria uma versão nova cujo conteúdo é o da versão-alvo.
 </details>

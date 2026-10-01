@@ -99,7 +99,7 @@ Bibliotecas como **fsspec**/**s3fs**/**gcsfs** e o [PyArrow](../../04-python-for
 ## Boas práticas
 
 - [Parquet](../../08-data-formats/04-parquet/README.md) + [partição](../05-partitioning/README.md)
-  + arquivos de tamanho saudável (evite small files).
+  - arquivos de tamanho saudável (evite small files).
 - IAM mínimo, criptografia, bloquear acesso público, versioning para dados críticos.
 - Lifecycle policies para custo; processe perto dos dados (evite egress).
 

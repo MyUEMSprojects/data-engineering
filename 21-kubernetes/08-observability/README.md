@@ -1,7 +1,7 @@
 # Observabilidade no Kubernetes
 
 > 🟣 Cloud & Infra · Parte de [21 — Kubernetes](../README.md)
-
+>
 > Fundamentos em [24 — Observability](../../24-observability/README.md). Aqui: **como observar e
 > depurar** cargas de dados em K8s.
 

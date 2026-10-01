@@ -21,10 +21,12 @@ Detectar ─► Triar/classificar ─► Comunicar ─► Mitigar ─► Resolve
 ```
 
 ### 1. Detecção
+
 Idealmente por [alertas](../04-alerting/README.md)/monitores de [frescor e qualidade](../06-data-freshness/README.md),
 **antes** do consumidor. Se o usuário detecta primeiro, melhore a observabilidade.
 
 ### 2. Triagem e severidade
+
 Classifique por **impacto** (quem/o quê afeta, quão crítico, há dados incorretos já consumidos?):
 
 | Sev | Exemplo em dados | Resposta |
@@ -35,35 +37,42 @@ Classifique por **impacto** (quem/o quê afeta, quão crítico, há dados incorr
 | **SEV4** | problema menor/cosmético | backlog |
 
 ### 3. Papéis (para incidentes maiores)
+
 **Incident Commander** (coordena, decide), **responsáveis técnicos** (investigam/mitigam), **comunicação**
 (atualiza stakeholders), **scribe** (registra a linha do tempo). Em incidentes pequenos, uma pessoa
 acumula papéis.
 
 ### 4. Comunicação
+
 Atualize **proativamente** consumidores e stakeholders (canal de incidente, status page): o que está
 acontecendo, impacto, ETA/próxima atualização. Transparência preserva a confiança — **dado errado
 silencioso é pior** que dado atrasado avisado. Marque datasets afetados ([catálogo](../../27-data-catalog-metadata/README.md)).
 
 ### 5. Mitigação (parar o sangramento primeiro)
+
 Prioridade: **reduzir impacto**, mesmo antes de achar a causa raiz:
+
 - **Pausar** pipelines/consumidores a jusante para não propagar dado ruim;
 - **Reverter** a mudança recente (rollback de código/config — [deploy](../../23-cicd-dataops/06-deployment-strategies/README.md));
 - **Servir o último estado bom** (snapshot/time travel — [lakehouse](../../15-lakehouse/README.md));
 - Aplicar workaround/manual; **sinalizar** dados suspeitos.
 
 ### 6. Diagnóstico e resolução
+
 Use [logs](../01-logging/README.md), [métricas](../02-metrics/README.md), [traces](../03-tracing/README.md) e
 [lineage](../../10-data-pipelines/06-data-lineage/README.md) (de onde veio / quem é afetado). Método:
 **o que mudou?** (deploy, fonte, schema, volume, config, nuvem) → hipótese → teste → registre. Siga o
 [roteiro de troubleshooting](../../02-linux-shell-environment/08-logs-and-troubleshooting/README.md).
 
 ### 7. Recuperação de dados
+
 Corrija a causa e **repare os dados**: reprocesse/[backfill](../../09-etl-elt/08-backfill/README.md)
 (pipelines **idempotentes** tornam isso seguro), restaure de snapshot/backup
 ([DR](../../06-databases/09-backup-recovery-dr/README.md)), reconcilie com a fonte, notifique consumidores
 sobre **janelas de dados corrigidas** (números históricos mudaram).
 
 ### 8. Pós-mortem (aprender)
+
 Documento **blameless** (sem culpados; foco em sistema/processo) em até alguns dias:
 
 - Resumo, **impacto** (quem/quanto tempo/quais dados), **linha do tempo**.

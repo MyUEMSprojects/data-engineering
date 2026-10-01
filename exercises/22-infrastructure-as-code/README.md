@@ -48,6 +48,7 @@ resource "aws_s3_bucket" "lake" {
   bucket   = "orders-${var.environment}-${each.key}"
 }
 ```
+
 Ver o conjunto completo no [Projeto 09](../../projects/09-cloud/infra/variables.tf). Referências: [módulos e variáveis](../../22-infrastructure-as-code/04-modules-variables/README.md).
 </details>
 
@@ -81,5 +82,6 @@ missing = [addr for k, addr in buckets.items() if k not in encrypted]
 print("violações:", missing)
 sys.exit(1 if missing else 0)
 ```
+
 **Armadilha:** no **plano**, valores computados aparecem como "conhecidos após o apply" e somem do JSON — por isso lint do **estado** ou da *configuração*. Implementação real e testada: [`policylint`](../../projects/09-cloud/src/policylint/lint.py).
 </details>

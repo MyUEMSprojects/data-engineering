@@ -64,6 +64,7 @@ alertar** (hard) ou quarentenar.
 ```text
 código (commit SHA) · dataset (snapshot/hash/versão) · features (versões) · hiperparâmetros · sementes · ambiente (imagem/lockfile) · métricas · artefatos (modelo + transformadores)
 ```
+
 - **Experiment tracking**: **MLflow**, Weights & Biases, Neptune, Comet — runs, params, métricas, artefatos.
 - **Dados**: DVC/lakeFS/snapshots Iceberg-Delta; **lineage** modelo→dataset→fontes
   ([lineage](../../10-data-pipelines/06-data-lineage/README.md)).
@@ -104,6 +105,7 @@ código (commit SHA) · dataset (snapshot/hash/versão) · features (versões) �
 - **Por novo dado** (volume/tempo).
 - **Por drift/degradação** detectados em produção ([observabilidade](../06-ml-observability-drift/README.md)).
 - **Por mudança de código/features** (CI).
+
 Equilibre custo e frescor; retreino contínuo exige **validação robusta** para não promover modelos piores.
 
 ## Erros comuns

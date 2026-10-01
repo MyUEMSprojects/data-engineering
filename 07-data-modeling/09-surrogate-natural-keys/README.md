@@ -28,13 +28,13 @@ cliente_sk | cliente_id | regiao | valido_de  | valido_ate
     250     |   C-7      | Sudeste| 2023-07-01 | 9999-12-31   -- versão atual
 ```
 
-2. **Estabilidade** — chaves de negócio mudam ou são reutilizadas; a surrogate nunca
+1. **Estabilidade** — chaves de negócio mudam ou são reutilizadas; a surrogate nunca
    muda.
-3. **Performance** — inteiros pequenos como FK no [fato](../07-fact-tables/README.md) são
+2. **Performance** — inteiros pequenos como FK no [fato](../07-fact-tables/README.md) são
    mais rápidos e compactos que chaves naturais (strings/compostas).
-4. **Integração** — unifica entidades de múltiplas fontes que usam identificadores
+3. **Integração** — unifica entidades de múltiplas fontes que usam identificadores
    diferentes.
-5. **Isolamento** — o fato não depende de mudanças/formatos das chaves de origem.
+4. **Isolamento** — o fato não depende de mudanças/formatos das chaves de origem.
 
 ## Problemas de usar natural keys como PK
 

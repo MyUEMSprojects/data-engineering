@@ -37,6 +37,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "raw" {
   }
 }
 ```
+
 Completo e aplicado num emulador no [Projeto 09](../../projects/09-cloud/README.md).
 </details>
 

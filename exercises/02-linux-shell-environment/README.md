@@ -11,6 +11,7 @@ O arquivo `app.log` tem linhas como `2024-03-01T10:00:01Z ERROR payments timeout
 ```bash
 grep ' ERROR ' app.log | awk '{print $3}' | sort | uniq -c | sort -rn
 ```
+
 `sort` antes de `uniq -c` é **obrigatório** (`uniq` só junta linhas adjacentes). Variante em um só `awk`: `awk '$2=="ERROR"{c[$3]++} END{for(k in c) print c[k], k}' app.log | sort -rn`.
 </details>
 
@@ -33,11 +34,13 @@ for f in $(ls /data/in/*.csv); do
   echo "$f: $rows" >> /tmp/report.txt
 done
 ```
+
 Aponte **quatro** problemas e reescreva de forma robusta.
 
 <details><summary>Gabarito</summary>
 
 Problemas: (1) `for f in $(ls ...)` quebra com **espaços** nos nomes; (2) `$f` sem aspas; (3) sem `set -euo pipefail` — falhas silenciosas; (4) se não houver `.csv`, o glob literal vira o "arquivo"; (5) `>>` acumula em execuções repetidas (não idempotente).
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -47,6 +50,7 @@ for f in /data/in/*.csv; do
   printf '%s: %s\n' "$f" "$(wc -l < "$f")" >> "$out"
 done
 ```
+
 Ver [shell scripting](../../02-linux-shell-environment/05-shell-scripting/README.md).
 </details>
 
@@ -61,6 +65,7 @@ Escreva as entradas de `crontab` para: (a) rodar `/opt/etl/run.sh` **todo dia à
 */15 8-18 * * 1-5 /opt/etl/run.sh
 0 3 1 * *        /opt/etl/run.sh
 ```
+
 Riscos: sem **dependências** entre jobs, sem **retry/alerta**, sem **backfill**, sobreposição de execuções (use `flock`), e fuso horário do servidor. Daí os orquestradores ([módulo 11](../../11-orchestration/README.md)). Ver [cron](../../02-linux-shell-environment/06-cron/README.md).
 </details>
 
@@ -77,6 +82,7 @@ du -xh --max-depth=1 / | sort -rh | head
 du -xh /var/log --max-depth=1 | sort -rh | head
 lsof +L1                     # arquivos APAGADOS mas ainda abertos (df cheio, du vazio)
 ```
+
 `lsof +L1` revela o clássico: log apagado com o processo ainda escrevendo — o espaço só volta ao reiniciar/ `truncate` o processo. **Correção durável:** `logrotate` com compressão e retenção, alerta de uso (>80%), e compactar/arquivar dados antigos. Ver [logs e troubleshooting](../../02-linux-shell-environment/08-logs-and-troubleshooting/README.md).
 </details>
 

@@ -28,6 +28,7 @@ PR do produtor ──► [CI: compatibilidade + testes de contrato] ──► de
 ## Estratégias
 
 ### 1. Provider-side (verificação pelo produtor) — a base
+
 O **produtor** valida seu dado/evento/tabela **contra o contrato** antes de publicar:
 
 - **No CI**: gera dados/exemplos, valida contra o schema/regras; testa o **código** que produz o dado.
@@ -38,6 +39,7 @@ O **produtor** valida seu dado/evento/tabela **contra o contrato** antes de publ
   validação de regras semânticas antes de emitir ([Kafka producers](../../18-message-brokers/03-producers-consumers/README.md)).
 
 ### 2. Consumer-driven contract testing (CDC)
+
 **Consumidores declaram** o que **precisam** (campos, tipos, valores); o **produtor** roda esses testes no CI
 **antes de mudar**, garantindo que **nenhum consumidor real quebra**. Origem: **Pact** em microsserviços.
 
@@ -52,11 +54,13 @@ Em dados, ainda é menos padronizado que em APIs — combine com [lineage](../..
 para descobrir consumidores e seus campos usados.
 
 ### 3. Consumer-side (defesa na entrada)
+
 O **consumidor** também **valida** o que recebe (não confia cegamente): rejeita/quarentena registros
 inválidos e **alerta** quando o contrato é violado ([validação](../../09-etl-elt/10-data-validation/README.md),
 [schema validation](../../12-data-quality/03-schema-validation/README.md)). Defesa em profundidade.
 
 ### 4. Monitoramento contínuo (runtime)
+
 Testes agendados/em cada run sobre o dado em produção (frescor, volume, distribuição, qualidade) com
 **alertas ao dono** ([data freshness](../../24-observability/06-data-freshness/README.md),
 [alertas](../../24-observability/04-alerting/README.md), [anomalias](../../12-data-quality/07-anomaly-detection/README.md)).
@@ -87,6 +91,7 @@ jobs:
       - run: dbt build --select tag:contract --target ci                                       # contratos de modelo + testes
       - run: pytest tests/contract/                                                           # expectativas dos consumidores
 ```
+
 (Confira comandos/flags na documentação da versão que usar.)
 
 ## Padrão Write–Audit–Publish (WAP)
@@ -96,6 +101,7 @@ WRITE:   escreve o novo dado em staging (invisível aos consumidores)
 AUDIT:   roda testes de contrato/qualidade sobre o staging
 PUBLISH: se passou → publica atomicamente (swap/branch merge/partition exchange); senão → bloqueia + alerta (quarentena)
 ```
+
 Com lakehouse (branches do Iceberg/Nessie, Delta) ou swap de tabelas, é a forma mais robusta de **nunca
 expor dado que viola o contrato** ([lakehouse](../../15-lakehouse/README.md), [ACID](../../15-lakehouse/03-acid-on-object-storage/README.md)).
 

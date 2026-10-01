@@ -22,6 +22,7 @@ FROM orders
 WHERE status = 'paid' AND order_date >= DATE '2024-01-01' AND order_date < DATE '2025-01-01' AND amount >= 100
 ORDER BY order_date DESC;
 ```
+
 Intervalo **semiaberto** (`>= início AND < próximo ano`) funciona com `date` e `timestamp`. `NULL <> 'canceled'` é `NULL` (desconhecido), não `TRUE` — a linha é descartada. Use `status IS DISTINCT FROM 'canceled'` (PostgreSQL/DuckDB) ou `COALESCE`.
 </details>
 
@@ -38,6 +39,7 @@ WHERE o.status = 'paid'
 GROUP BY c.country
 HAVING COUNT(DISTINCT o.customer_id) > 3;
 ```
+
 `WHERE` filtra **linhas** antes de agrupar; `HAVING` filtra **grupos** depois.
 </details>
 
@@ -52,6 +54,7 @@ SELECT c.* FROM customers c WHERE NOT EXISTS (SELECT 1 FROM orders o WHERE o.cus
 -- ou
 SELECT c.* FROM customers c LEFT JOIN orders o USING (customer_id) WHERE o.order_id IS NULL;
 ```
+
 `NOT IN (SELECT customer_id FROM orders)` **retorna vazio** se a subconsulta tiver **um único NULL** (comparação com NULL é desconhecida). `NOT EXISTS` não tem essa armadilha.
 </details>
 
@@ -72,6 +75,7 @@ SELECT * FROM (
 SELECT month, revenue, SUM(revenue) OVER (ORDER BY month) AS running_total
 FROM (SELECT date_trunc('month', order_date) AS month, SUM(amount) AS revenue FROM orders GROUP BY 1) m;
 ```
+
 `ROW_NUMBER` desempata de forma determinística (`RANK` devolveria empates). No PostgreSQL, `DISTINCT ON (customer_id) ... ORDER BY customer_id, amount DESC` é uma alternativa específica (não padrão SQL).
 </details>
 
@@ -82,6 +86,7 @@ SELECT o.order_id, SUM(o.amount) AS revenue
 FROM orders o JOIN order_items i ON i.order_id = o.order_id
 GROUP BY o.order_id;
 ```
+
 Um pedido de R$ 100 com 3 itens aparece como R$ 300. Explique e corrija de **duas** formas.
 
 <details><summary>Gabarito</summary>
@@ -105,5 +110,6 @@ g AS (
 SELECT customer_id, MIN(d) AS start_date, MAX(d) AS end_date, COUNT(*) AS days
 FROM g GROUP BY customer_id, grp ORDER BY customer_id, start_date;
 ```
+
 Truque *gaps and islands*: em dias consecutivos, `d − row_number` é **constante**; ao quebrar a sequência, o valor muda. Ver [SQL analítico](../../05-sql/13-analytical-sql/README.md).
 </details>

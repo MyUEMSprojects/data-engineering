@@ -28,6 +28,7 @@ FROM {{ ref('stg_orders') }}
 WHERE status <> 'canceled'
 GROUP BY 1
 ```
+
 `ref`/`source` constroem o **DAG** e resolvem o schema por ambiente. Ver [modelos](../../28-dbt/02-models/README.md) e o [Projeto 02](../../projects/02-analytics-warehouse/README.md).
 </details>
 
@@ -50,10 +51,12 @@ models:
         data_tests:
           - relationships: {arguments: {to: ref('dim_customer'), field: customer_id}}
 ```
+
 ```sql
 -- tests/assert_revenue_not_negative.sql  (retorna linhas = falha)
 SELECT * FROM {{ ref('fct_daily_revenue') }} WHERE revenue < 0
 ```
+
 (A sintaxe `arguments:` é a atual do dbt 1.10+.) Ver [testes](../../28-dbt/05-tests/README.md).
 </details>
 
@@ -71,6 +74,7 @@ FROM {{ ref('stg_events') }}
 WHERE cast(event_ts AS date) >= (SELECT max(event_date) - interval '3 days' FROM {{ this }})
 {% endif %}
 ```
+
 O *lookback* de 3 dias absorve atrasos; `unique_key` evita duplicar. Rode `--full-refresh` ao mudar a lógica. Ver [incremental](../../28-dbt/08-incremental-models/README.md).
 </details>
 

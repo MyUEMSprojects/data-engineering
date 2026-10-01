@@ -65,22 +65,26 @@ slaProperties:
 ## Integração no ciclo de vida
 
 ### 1. Desenvolvimento (Git + PR)
+
 Contrato junto do código/schema do produtor; mudanças por **PR**, com **CODEOWNERS** (dono + consumidores
 críticos) ([PRs](../../03-git-software-engineering/03-pull-requests-code-review/README.md)).
 
 ### 2. CI/CD
+
 - **Lint** do contrato; **breaking-change check** vs versão publicada; **testes de contrato**; geração de
   artefatos (SQL/dbt/Avro/JSON Schema/docs) **a partir do contrato**
   ([contract testing](../05-contract-testing/README.md), [CI](../../23-cicd-dataops/01-continuous-integration/README.md)).
 - Publicação automática no **registry/catálogo** ao mergear.
 
 ### 3. Runtime
+
 - **Streaming**: Schema Registry + validação semântica no produtor; consumidor tolerante.
 - **Batch/warehouse**: **Write-Audit-Publish**, dbt `contract: enforced`, testes (dbt/GX/Soda) como gate do
   [DAG](../../10-data-pipelines/02-dags-dependencies/README.md).
 - **Monitoramento** de SLAs/qualidade com alertas ao dono ([observability](../../24-observability/README.md)).
 
 ### 4. Catálogo e governança
+
 Importar contratos para o catálogo (ownership, classificação, SLAs, lineage, consumidores) —
 **DataHub/OpenMetadata** têm suporte a contratos ([ferramentas](../../27-data-catalog-metadata/04-tools/README.md)).
 PII declarada no contrato **aciona** políticas de mascaramento/acesso
@@ -98,6 +102,7 @@ models:
       - { name: amount,    data_type: numeric(12,2), tests: [{ dbt_utils.accepted_range: { min_value: 0 } }] }
       - { name: status,    data_type: string,        tests: [{ accepted_values: { values: [CREATED, PAID, SHIPPED, CANCELED] } }] }
 ```
+
 (Constraints de warehouse podem ser **informativas** — complemente com testes: ver
 [constraints](../../05-sql/09-constraints/README.md).)
 

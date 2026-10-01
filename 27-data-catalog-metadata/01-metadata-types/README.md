@@ -12,6 +12,7 @@ diferentes; um bom catálogo **combina todos**. (Visão de governança em
 ## Os tipos
 
 ### 1. Metadados técnicos
+
 **Como o dado está estruturado e armazenado.** Coletados **automaticamente** dos sistemas.
 
 - Schema: tabelas, colunas, tipos, nulabilidade, chaves, constraints.
@@ -21,6 +22,7 @@ diferentes; um bom catálogo **combina todos**. (Visão de governança em
 - Origem técnica: sistema/banco/schema, conexão, tipo de ativo (tabela, view, tópico, dashboard).
 
 ### 2. Metadados de negócio
+
 **O que o dado significa e como se usa.** Exigem **curadoria humana**.
 
 - Descrição e definição de negócio; **glossário** (termos como "cliente ativo", "receita líquida").
@@ -29,6 +31,7 @@ diferentes; um bom catálogo **combina todos**. (Visão de governança em
 - Contexto de uso, exemplos de consulta, limitações conhecidas.
 
 ### 3. Metadados operacionais
+
 **Como o dado é produzido e se comporta no tempo.** Coletados de pipelines/orquestradores/engines.
 
 - Execução: último run, status, duração, job/DAG/tarefa que produz, versão do código/imagem.
@@ -38,6 +41,7 @@ diferentes; um bom catálogo **combina todos**. (Visão de governança em
 - Incidentes/mudanças recentes.
 
 ### 4. Metadados de governança e segurança
+
 **Regras e controles aplicáveis.**
 
 - **Classificação/sensibilidade** (público→restrito), tags **PII** ([classificação](../../25-data-governance/05-access-control-classification/README.md)).
@@ -45,12 +49,14 @@ diferentes; um bom catálogo **combina todos**. (Visão de governança em
   confiança, ciclo de vida (ativo/depreciado).
 
 ### 5. Metadados sociais / colaborativos
+
 **Conhecimento coletivo dos usuários.**
 
 - Tags, comentários, perguntas e respostas, avaliações/curtidas, favoritos, "quem usa isto".
 - Ajudam a descobrir o que é **confiável e popular**.
 
 ### 6. Metadados de lineage (relacional)
+
 **Relações entre ativos**: de onde vem e para onde vai — tratado em
 [lineage e column lineage](../02-lineage-column-lineage/README.md).
 

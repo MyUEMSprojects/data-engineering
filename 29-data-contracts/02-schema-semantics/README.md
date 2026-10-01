@@ -16,6 +16,7 @@
 ## Schema
 
 ### O que especificar
+
 - **Campos** e **tipos** (`string`, `int64`, `decimal(12,2)`, `timestamp`, arrays/structs).
 - **Nulabilidade/obrigatoriedade** (`required`), valores default.
 - **Chaves**: primária/natural, unicidade, estrangeiras (integridade referencial).
@@ -35,6 +36,7 @@
 | **ODCS / Data Contract Spec (YAML)** | contrato **completo** (schema + qualidade + SLA + dono), independente de formato |
 
 ### Tipos: cuidados que viram bugs
+
 - **Dinheiro**: `decimal` com escala definida, **não** `float`; documente a **moeda** e se é **centavos ou
   unidade**.
 - **Timestamps**: **fuso (UTC)** e precisão; `date` vs `timestamp`; evento vs processamento
@@ -47,6 +49,7 @@
 ## Semântica
 
 ### O que documentar
+
 - **Definição de negócio** de cada campo ("`amount`: valor total do pedido **com impostos e sem frete**, em
   BRL").
 - **Unidades e escala** (R$ vs centavos, kg vs g, UTC vs local).
@@ -60,6 +63,7 @@
 - **Limitações conhecidas** e casos de borda.
 
 ### Como tornar a semântica verificável
+
 Nem tudo é automatizável, mas muito é: transforme regras em **checagens**:
 
 ```yaml
@@ -72,6 +76,7 @@ quality:
   - rule: net_amount = amount - discount
   - rule: row_count between 0.8 * avg_7d and 1.2 * avg_7d    # volume sazonal
 ```
+
 Implementadas com [dbt tests](../../28-dbt/05-tests/README.md), [Great Expectations/Soda](../../12-data-quality/README.md)
 ou pelo próprio runtime de contratos ([implementação](../06-implementation/README.md)).
 

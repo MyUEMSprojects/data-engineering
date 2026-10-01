@@ -1,7 +1,7 @@
 # CDC e Debezium (avançado)
 
 > 🟣 Advanced · Parte de [30 — Advanced](../README.md) · *Natureza: especialização de alto valor prático*
-
+>
 > Conceito e abordagens de CDC em [ETL/CDC](../../09-etl-elt/06-cdc/README.md). Aqui: **Debezium em
 > profundidade** e os desafios de produção.
 
@@ -29,6 +29,7 @@ Postgres (WAL) ─► Debezium Connector ─► Kafka (topics: server.schema.tab
   "ts_ms": 1700000000123
 }
 ```
+
 - `before`/`after` permitem **reconstruir** a mudança (before depende da config — ex.: `REPLICA IDENTITY FULL`
   no Postgres para obter `before` completo).
 - **Chave** da mensagem = PK da linha → ordem **por registro** na partição ([ordem](../../18-message-brokers/05-ordering-retention-replay/README.md)).
@@ -64,6 +65,7 @@ Postgres (WAL) ─► Debezium Connector ─► Kafka (topics: server.schema.tab
   }
 }
 ```
+
 (Propriedades variam por versão do Debezium — confira a documentação. Segredos via *config providers*,
 nunca em texto claro — [secrets](../../26-security/04-secrets-management/README.md).)
 

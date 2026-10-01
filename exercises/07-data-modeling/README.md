@@ -46,6 +46,7 @@ INSERT INTO dim_customer (customer_sk, customer_id, country, valid_from, valid_t
 VALUES (nextval('dim_customer_sk_seq'), 7, 'PT', DATE '2024-05-01', DATE '9999-12-31', true);
 COMMIT;
 ```
+
 Janela **semiaberta** `[valid_from, valid_to)`: sem sobreposição. Tudo numa **transação**. Na prática use `dbt snapshot` ou `MERGE` ([Projeto 02](../../projects/02-analytics-warehouse/README.md)). Ver [SCD](../../07-data-modeling/10-slowly-changing-dimensions/README.md).
 </details>
 

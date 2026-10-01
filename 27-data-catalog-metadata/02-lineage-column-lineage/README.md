@@ -1,7 +1,7 @@
 # Lineage e column lineage
 
 > 🟣 Production · Parte de [27 — Catalog & Metadata](../README.md)
-
+>
 > Conceito e uso em pipelines: [data lineage](../../10-data-pipelines/06-data-lineage/README.md); visão de
 > governança: [lineage](../../25-data-governance/03-lineage/README.md). Aqui: **como é modelado e capturado**
 > tecnicamente, com foco em **column-level**.
@@ -40,6 +40,7 @@ raw.clientes ─► stg_clientes ─► dim_cliente ─┘
 ## Column-level lineage
 
 ### Por que é valioso
+
 - **Privacidade**: rastrear onde uma coluna **PII** (`cpf`) é copiada/derivada ⇒ aplicar mascaramento,
   atender exclusão ([LGPD](../../26-security/08-lgpd/README.md)).
 - **Análise de impacto precisa**: "alterar `clientes.uf` quebra **quais colunas e dashboards**?" (em vez de
@@ -48,6 +49,7 @@ raw.clientes ─► stg_clientes ─► dim_cliente ─┘
 - **Propagação de tags/descrições** coluna a coluna.
 
 ### Como é extraído (parsing de SQL)
+
 A ferramenta analisa a query (AST) e resolve, para cada coluna de saída, **de quais colunas de entrada ela
 depende e por qual expressão**:
 
@@ -69,6 +71,7 @@ OpenMetadata, e **informação nativa de plataformas** (Snowflake `ACCESS_HISTOR
 Unity Catalog, Dataplex, Purview).
 
 ### Limites
+
 SQL dinâmico, `SELECT *`, UDFs, Python/Spark com lógica opaca, `pivot`, joins complexos e planilhas reduzem a
 precisão. Para código não-SQL, use **instrumentação** (OpenLineage + facets de coluna) ou declaração
 explícita.

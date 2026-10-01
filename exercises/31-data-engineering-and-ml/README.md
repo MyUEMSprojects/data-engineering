@@ -36,6 +36,7 @@ LEFT JOIN LATERAL (
 ) f ON true;
 -- DuckDB/Snowflake: ASOF JOIN features f ON l.user_id = f.user_id AND l.label_ts >= f.feature_ts
 ```
+
 É a operação central de *feature stores* para montar conjuntos de treino sem vazamento.
 </details>
 
@@ -54,6 +55,7 @@ def psi(train, prod, bins=10, eps=1e-6):
     q = np.histogram(prod, edges)[0] / len(prod) + eps
     return float(np.sum((q - p) * np.log(q / p)))
 ```
+
 Regra de bolso: PSI < 0,1 estável; 0,1–0,25 atenção; > 0,25 *drift* relevante. Ver [observabilidade de ML](../../31-data-engineering-and-ml/06-ml-observability-drift/README.md).
 </details>
 

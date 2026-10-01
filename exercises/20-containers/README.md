@@ -23,6 +23,7 @@ Dentro do contêiner, `localhost` é **ele mesmo**. Use o **nome do serviço** (
 ## 3. 🔵 Implementação — Dockerfile eficiente
 
 Reescreva para melhor cache e imagem menor:
+
 ```dockerfile
 FROM python:3.12
 COPY . /app
@@ -42,6 +43,7 @@ RUN useradd -m app && chown -R app /app
 USER app                                               # não rode como root
 CMD ["python", "-m", "main"]
 ```
+
 Copiar `requirements.txt` **antes** do código preserva o cache; `slim` reduz a imagem; use `.dockerignore`. Ver [multi-stage builds](../../20-containers/06-multi-stage-builds/README.md).
 </details>
 
@@ -59,6 +61,7 @@ FROM python:3.12-slim
 COPY --from=build /wheels /wheels
 RUN pip install --no-cache-dir --no-index --find-links=/wheels -r requirements.txt
 ```
+
 A imagem final **não carrega** compiladores nem arquivos de build: menor e com superfície de ataque reduzida.
 </details>
 

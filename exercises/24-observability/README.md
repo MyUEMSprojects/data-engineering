@@ -24,6 +24,7 @@ def emit(level, msg, **fields):
     print(json.dumps({"level": level, "msg": msg, **fields}), file=sys.stdout, flush=True)
 emit("ERROR", "falha ao processar arquivo", file=f, run_id=run_id, error=repr(e))
 ```
+
 JSON permite filtrar por campo (`run_id`, `file`) no agregador de logs; texto livre exige regex frágil. Nunca logue **PII** ou segredos.
 </details>
 
@@ -45,6 +46,7 @@ groups:
         expr: pipeline_gate_blocked == 1
         labels: {severity: page}
 ```
+
 Valide com `promtool check rules`. Ver [alertas](../../24-observability/04-alerting/README.md) e os arquivos [do capstone](../../projects/10-capstone/monitoring/alerts.yml).
 </details>
 

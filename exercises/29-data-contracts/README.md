@@ -35,6 +35,7 @@ schema:
   - {name: amount, type: decimal, required: true, min: 0}
 sla: {freshness_hours: 26}
 ```
+
 ```python
 def validate(rows, contract):
     errs = []
@@ -45,6 +46,7 @@ def validate(rows, contract):
         if "min" in col and any(v is not None and v < col["min"] for v in vals): errs.append(f"{col['name']}: < {col['min']}")
     return errs
 ```
+
 Versão completa (hard/soft, limites, quarentena): [Projeto 04](../../projects/04-data-quality/README.md). Ver [implementação](../../29-data-contracts/06-implementation/README.md).
 </details>
 

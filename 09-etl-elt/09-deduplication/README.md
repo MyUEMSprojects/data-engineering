@@ -30,6 +30,7 @@ corrompendo métricas.
 ```sql
 SELECT DISTINCT * FROM eventos;              -- SQL
 ```
+
 ```python
 df.drop_duplicates()                          # pandas
 df.unique()                                   # polars

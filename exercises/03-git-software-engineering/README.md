@@ -34,13 +34,15 @@ Dadas as mensagens: `fix(api): trata timeout`, `feat(etl): adiciona carga increm
 ## 4. 🔵 Debugging — Conflito de merge
 
 Ao dar `git merge feature/novo-schema` aparece:
-```
+
+```text
 <<<<<<< HEAD
 amount NUMERIC(12,2) NOT NULL,
 =======
 amount NUMERIC(14,4) NOT NULL,
 >>>>>>> feature/novo-schema
 ```
+
 Como decidir a resolução e **garantir** que o resultado não quebra o pipeline?
 
 <details><summary>Gabarito</summary>
@@ -64,6 +66,7 @@ repo/
 ├── tests/          # integração
 └── .github/workflows/
 ```
+
 **Mono-repo** para 8 pessoas: mudanças atômicas (código + modelo + DAG no mesmo PR), CI único, menos coordenação de versões. Multi-repo vale com times autônomos, ciclos de release distintos ou requisitos de acesso diferentes. Ver [organização de projetos](../../03-git-software-engineering/07-project-organization/README.md).
 </details>
 
@@ -94,5 +97,6 @@ def test_dedupe_keeps_latest_and_is_idempotent():
     assert {r["id"]: r["v"] for r in out} == {1: "c", 2: "y"}
     assert dedupe(out) == out
 ```
+
 Ver [testes](../../03-git-software-engineering/05-testing/README.md).
 </details>

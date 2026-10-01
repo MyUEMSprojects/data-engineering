@@ -31,6 +31,7 @@ SELECT user_id, event_type             -- só as colunas necessárias
 FROM events
 WHERE event_ts >= TIMESTAMP '2024-03-01' AND event_ts < TIMESTAMP '2024-03-02';   -- filtro DIRETO na coluna de partição
 ```
+
 `DATE(event_ts) = ...` aplica **função** na coluna e frequentemente impede a **poda de partições**. Use intervalo semiaberto sobre a coluna crua e selecione só o necessário.
 </details>
 
@@ -68,5 +69,6 @@ FROM orders
 WHERE order_date >= :ds - INTERVAL '3 days' AND order_date <= :ds AND status <> 'canceled'
 GROUP BY 1, 2;
 ```
+
 É o padrão *delete+insert com **lookback***: pedidos atrasados corrigem os dias recentes; o histórico antigo fica intocado. Em dbt: `incremental` com `delete+insert` e `lookback`. Ver [incremental](../../28-dbt/08-incremental-models/README.md).
 </details>

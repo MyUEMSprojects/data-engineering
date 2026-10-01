@@ -1,7 +1,7 @@
 # Monitoring e autoscaling
 
 > 🟣 Cloud & Infra · Parte de [19 — Cloud](../README.md)
-
+>
 > Fundamentos de observabilidade em [24 — Observability](../../24-observability/README.md); aqui, a
 > visão de **serviços cloud** para monitorar infraestrutura e **escalar** automaticamente.
 

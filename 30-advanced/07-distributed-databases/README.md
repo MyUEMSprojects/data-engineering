@@ -36,11 +36,13 @@ focada em OLAP.
 ## Os problemas fundamentais (e as soluções)
 
 ### 1. Particionamento (sharding)
+
 Dividir os dados por **chave** (hash/range) entre nós; **rebalanceamento** ao crescer (consistent hashing,
 *ranges* dinâmicos que se dividem/mesclam — Spanner/Cockroach); **hot spots**
 ([partitioning](../../06-databases/06-partitioning-sharding/README.md)).
 
 ### 2. Replicação e consenso
+
 Cada partição é replicada em N nós; **consenso (Paxos/Raft)** elege líder e **ordena as escritas** com
 maioria (quorum), tolerando falhas sem perder dados confirmados. Ex.: **Raft por range/tablet** em
 Cockroach/Yugabyte/TiDB; **Paxos** no Spanner.
@@ -51,11 +53,13 @@ falha do líder → nova eleição (poucos segundos) → continua
 ```
 
 ### 3. Transações distribuídas
+
 Transação atingindo **várias partições** exige **atomicidade** entre nós: **two-phase commit (2PC)**
 (coordenador + participantes; custo e risco de bloqueio) combinado com consenso para o coordenador
 tolerar falhas. Estratégias de isolamento: **MVCC distribuído**, locks, ou **timestamps globais**.
 
 ### 4. Tempo e ordenação
+
 Ordenar eventos entre nós sem relógio global confiável:
 
 - **Relógios lógicos/híbridos (HLC)** — CockroachDB/Yugabyte (com limites de *clock skew*).
@@ -65,6 +69,7 @@ Ordenar eventos entre nós sem relógio global confiável:
   região).
 
 ### 5. Consistência vs disponibilidade vs latência
+
 Sob **partição de rede**: **CP** (recusa para manter consistência — Spanner, Cockroach, etcd) vs **AP**
 (responde com dado possivelmente antigo — Cassandra/Dynamo). **PACELC**: mesmo sem partição, há trade-off
 **latência × consistência** (replicação síncrona entre regiões custa dezenas–centenas de ms)

@@ -44,9 +44,12 @@ O painel de vendas mostra **R$ 1,20 mi** e o relatório financeiro **R$ 1,15 mi*
 
 <details><summary>Gabarito</summary>
 
-1. **Fuso horário/fronteira do mês** (UTC × local) → comparar contagem de pedidos nos últimos/primeiros dias. 2. **Cancelamentos/reembolsos** incluídos em um e não no outro → conferir `status`.
-3. **Duplicatas** na ingestão (*at-least-once*) → `count(*)` × `count(distinct id)`. 4. **Dado tardio** (o painel foi calculado antes de chegar tudo) → comparar por data de ingestão.
+1. **Fuso horário/fronteira do mês** (UTC × local) → comparar contagem de pedidos nos últimos/primeiros dias.
+2. **Cancelamentos/reembolsos** incluídos em um e não no outro → conferir `status`.
+3. **Duplicatas** na ingestão (*at-least-once*) → `count(*)` × `count(distinct id)`.
+4. **Dado tardio** (o painel foi calculado antes de chegar tudo) → comparar por data de ingestão.
 5. **Definições diferentes de "venda"** (bruto × líquido, com/sem frete) → contrato/definição de métrica. Moral: métrica sem **definição única e testada** gera discussões — ver [data contracts](../../29-data-contracts/README.md).
+
 </details>
 
 ## 5. 🟣 Arquitetura — Do requisito ao desenho

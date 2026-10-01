@@ -31,6 +31,7 @@ DELETE FROM access_logs WHERE ts < now() - interval '12 months';
 -- esquecimento: anonimizar/excluir em TODAS as camadas (bronze/silver/gold/backups conforme política)
 UPDATE customers SET name = NULL, email = NULL, cpf = NULL, erased_at = now() WHERE customer_id = :id;
 ```
+
 Desafios: propagar a exclusão para cópias derivadas (lake, features), backups (expiram por ciclo) e registrar **auditoria**. Ver [retenção e auditoria](../../25-data-governance/06-retention-auditing/README.md) e [LGPD](../../26-security/08-lgpd/README.md).
 </details>
 
@@ -59,4 +60,5 @@ Para uma empresa de e-commerce, liste as **etapas** para se adequar à LGPD no l
 <details><summary>Gabarito</summary>
 
 1) **Inventário** de dados pessoais e fluxos (catálogo/linhagem); 2) base legal e finalidade por tratamento; 3) minimização e **retenção**; 4) controles (acesso mínimo, criptografia, **mascaramento/pseudonimização**); 5) processo de **direitos do titular** (acesso, correção, exclusão); 6) gestão de incidentes (notificação); 7) DPO e registro das operações (RoPA); 8) auditoria. Ver [compliance e privacidade](../../25-data-governance/07-compliance-privacy/README.md).
+
 </details>

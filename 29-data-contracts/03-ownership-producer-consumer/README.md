@@ -68,6 +68,7 @@ Na prática: **produtor é dono e publica**, **consumidores participam** (revisa
       anúncio ─► período de coexistência (v1 e v2) ─► migração dos consumidores ─► depreciação ─► desligamento v1
 4. Atualiza catálogo/documentação; comunica
 ```
+
 Detalhes em [compatibilidade e versionamento](../04-compatibility-versioning/README.md). Acordos
 (prazos de depreciação, janela de coexistência, canais) fazem parte do contrato.
 

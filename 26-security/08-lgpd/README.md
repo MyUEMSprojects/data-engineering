@@ -1,7 +1,7 @@
 # LGPD (Lei Geral de Proteção de Dados)
 
 > 🟣 Production · Parte de [26 — Security](../README.md)
-
+>
 > ⚠️ **Aviso**: material **educacional**, não é aconselhamento jurídico. A LGPD é interpretada pela **ANPD**
 > e pelo Judiciário; para decisões concretas, consulte o jurídico/DPO. Verifique sempre o texto legal e as
 > orientações vigentes da ANPD (gov.br/anpd).
@@ -75,6 +75,7 @@ retenção**. Se a base é consentimento, é preciso **rastrear e honrar a revog
 | **Revisão de decisões automatizadas** | explicabilidade em ML ([DE + ML](../../31-data-engineering-and-ml/README.md)) |
 
 ### O desafio da exclusão (resumo técnico)
+
 Dados vivem em **object storage imutável, Parquet, logs de Kafka, snapshots/time travel, backups, derivados,
 features/modelos de ML, cópias em BI**. Estratégias: **chave de titular** consistente; **PII isolada** em
 tabelas/schemas próprios; lakehouse `DELETE` + `VACUUM`/expiração de snapshots ([Delta](../../15-lakehouse/04-delta-lake/README.md)/[Iceberg](../../15-lakehouse/05-apache-iceberg/README.md));

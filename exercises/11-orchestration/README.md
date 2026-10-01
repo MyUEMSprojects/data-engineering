@@ -18,6 +18,7 @@ Faz: agendar, resolver dependências, **retry**, alertar, **backfill**, expor hi
 def extract():
     day = date.today()   # <- ?
 ```
+
 Qual é o defeito e a correção em Airflow?
 
 <details><summary>Gabarito</summary>
@@ -39,6 +40,7 @@ def gate(ds=None):
     if bad_data(ds):
         raise AirflowFailException("gate reprovou")   # falha PERMANENTE: não tenta de novo
 ```
+
 `AirflowFailException` pula os retries; exceções comuns respeitam `retries`. Mesmo padrão do [Projeto 03](../../projects/03-orchestration/README.md).
 </details>
 

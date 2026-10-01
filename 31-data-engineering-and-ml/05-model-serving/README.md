@@ -26,6 +26,7 @@ Escolha pelo **requisito de latência e frescor** — não pela moda:
 Tabela de entidades ─► job (Spark/SQL/Python, agendado) ─► features offline ─► modelo ─► predições gravadas (warehouse/KV)
 Aplicação consulta as predições PRÉ-CALCULADAS
 ```
+
 - **Pré-computa** predições; latência de leitura ≈ lookup. Barato, escalável, fácil de testar/auditar.
 - Desvantagem: **defasagem** (predição tão velha quanto o último job) e desperdício se poucas entidades são
   consultadas.
@@ -40,6 +41,7 @@ Aplicação consulta as predições PRÉ-CALCULADAS
 App ─► API de inferência ─► [busca features no ONLINE store] ─► modelo ─► predição ─► app
                               (+ features on-demand do contexto da requisição)
 ```
+
 - Requisitos: **p95/p99 de latência**, alta disponibilidade, autoscaling, versionamento/rollout seguro.
 - A **latência total** = rede + busca de features + pré-processamento + inferência + pós-processamento. A
   busca de features no online store costuma ser parte relevante — daí a importância do KV rápido

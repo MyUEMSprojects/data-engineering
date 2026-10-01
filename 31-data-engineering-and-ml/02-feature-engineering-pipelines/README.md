@@ -49,21 +49,26 @@ técnica**. Os desafios clássicos:
 ## Arquitetura de pipelines de features
 
 ### Batch
+
 ```text
 Warehouse/lake (silver) ─► job agendado (SQL/dbt/Spark) ─► tabela de features (versionada, particionada por data)
 ```
+
 Simples, barato, ideal para features que mudam devagar. Atualizadas por [orquestração](../../11-orchestration/README.md)
 (diária/horária), **idempotentes** e **parametrizadas por data**
 ([idempotência](../../09-etl-elt/07-idempotency-retries/README.md), [backfill](../../09-etl-elt/08-backfill/README.md)).
 
 ### Streaming
+
 ```text
 Eventos (Kafka) ─► Flink/Spark SS/Kafka Streams (janelas/estado) ─► feature store online (+ lake p/ offline)
 ```
+
 Para **frescor de segundos** (fraude, recomendação em sessão): agregações em janela mantidas em tempo real
 ([stateful](../../17-streaming/05-stateful-processing/README.md)).
 
 ### On-demand (request-time)
+
 Features que dependem do **contexto da requisição** (valor da transação atual, geolocalização) são
 calculadas **na hora da inferência** — com a **mesma função** usada no treino (código compartilhado).
 
@@ -74,6 +79,7 @@ calculadas **na hora da inferência** — com a **mesma função** usada no trei
         ▼                                               ▼
   execução BATCH (treino, backfill)           execução ONLINE (serving, baixa latência)
 ```
+
 Evita skew: **o mesmo código/lógica** (ou uma DSL/feature store que gera ambos) alimenta treino e serviço.
 
 ## Implementação com ferramentas que você já conhece
@@ -96,6 +102,7 @@ compras_30d = FeatureView(
     source=FileSource(path="s3://lake/gold/compras_30d/", timestamp_field="event_ts"),
 )
 ```
+
 (APIs mudam entre versões — consulte a documentação do Feast/ferramenta usada.)
 
 ## Qualidade, testes e observabilidade das features

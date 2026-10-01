@@ -33,15 +33,18 @@ Pipeline X comprometido com role AdministratorAccess → acesso a todos os dados
 ## Como aplicar em plataformas de dados
 
 ### 1. Uma identidade por função/pipeline
+
 Evite uma role "poderosa" compartilhada. Cada pipeline/serviço tem sua **service account/role** com
 permissões **exatas** (ler `bronze/X`, escrever `silver/X`) ([IAM](../02-iam/README.md)).
 
 ### 2. Escopo fino em recursos e ações
+
 - **Ações**: `GetObject` ≠ `*`; separe leitura de escrita e de administração.
 - **Recursos**: prefixo/tabela/tópico específico, não `*`.
 - **Condições**: tag/domínio, origem de rede, MFA, horário.
 
 ### 3. Humanos
+
 - **Acesso de leitura por padrão**; escrita em produção só via pipeline/CI (humano não altera prod à mão).
 - **Papéis por função** (analista, engenheiro) em vez de permissões individuais.
 - **JIT/break-glass** para elevação, com **aprovação, justificativa, prazo e auditoria**
@@ -49,12 +52,14 @@ permissões **exatas** (ler `bronze/X`, escrever `silver/X`) ([IAM](../02-iam/RE
 - Ambientes separados: dev **sem** acesso a dados reais de prod.
 
 ### 4. Dentro do warehouse/lake
+
 - Grants por **schema/tabela/coluna**, **row-level** e **column-level** security, **mascaramento** de PII
   ([acesso e classificação](../../25-data-governance/05-access-control-classification/README.md),
   [masking](../07-data-masking-pii/README.md)).
 - Contas de BI/ferramentas externas com **somente leitura** e escopo restrito.
 
 ### 5. Infraestrutura e CI/CD
+
 - Roles de deploy **por ambiente**, com **OIDC** (sem chaves) e **aprovação** para prod ([CI/CD](../../23-cicd-dataops/03-testing-build-deploy/README.md)).
 - **IaC** com o plano revisado; contas separadas por ambiente; **guardrails organizacionais** (SCP/Org
   Policy) como teto ([IaC](../../22-infrastructure-as-code/05-environments-secrets/README.md)).

@@ -1,7 +1,7 @@
 # Controle de acesso e classificação
 
 > 🟣 Production · Parte de [25 — Data Governance](../README.md)
-
+>
 > Mecanismos técnicos (IAM, criptografia, mascaramento) em [26 — Security](../../26-security/README.md).
 > Aqui: a **política**: classificar dados e decidir **quem acessa o quê**.
 
@@ -75,6 +75,7 @@ Em vez de grants por tabela, defina **políticas ligadas a tags de classificaç�
 ```text
 tag pii=true  → mascarar para papel "analista"; texto claro só para "fraude"; negar para "externo"
 ```
+
 O mascaramento/acesso se aplica automaticamente a qualquer coluna tageada — escala e consistência
 ([masking](../../26-security/07-data-masking-pii/README.md)).
 
@@ -83,6 +84,7 @@ O mascaramento/acesso se aplica automaticamente a qualquer coluna tageada — es
 ```text
 Solicitação (catálogo) ─► owner/steward aprova (justificativa, finalidade, prazo) ─► concessão automatizada (IaC/IAM) ─► auditoria ─► expira/recertificação
 ```
+
 Automatize para ser rápido (self-service) mas controlado e auditável ([auditoria](../06-retention-auditing/README.md)).
 
 ## Erros comuns

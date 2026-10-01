@@ -35,6 +35,7 @@ def project(events):
             state[e["order_id"]] = {"status": e["status"], "seq": e["seq"]}
     return state
 ```
+
 É o *upsert que só avança* do [Projeto 07](../../projects/07-kafka/README.md) (`WHERE seq novo > seq atual`).
 </details>
 

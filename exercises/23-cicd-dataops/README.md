@@ -41,6 +41,7 @@ jobs:
       - run: ruff check .
       - run: pytest -q
 ```
+
 Valide com `actionlint` (como feito nos workflows do repositório). Exemplos reais: [`capstone.yml`](../../.github/workflows/capstone.yml), [`projects.yml`](../../.github/workflows/projects.yml).
 </details>
 

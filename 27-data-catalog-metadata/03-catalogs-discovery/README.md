@@ -18,6 +18,7 @@ O catálogo é o "Google + Wikipédia + mapa" dos dados.
 ## Capacidades
 
 ### 1. Discovery (descoberta)
+
 - **Busca** por nome, descrição, coluna, tag, domínio, dono (full-text + facetas).
 - **Navegação** por domínio/produto/camada; **ranking** por uso/popularidade/certificação.
 - **Perfil do ativo**: descrição, schema, amostra (com mascaramento), estatísticas, frescor, qualidade,
@@ -26,6 +27,7 @@ O catálogo é o "Google + Wikipédia + mapa" dos dados.
 - **Integração no fluxo**: link do dashboard/IDE/dbt para o catálogo; busca embutida em notebooks/BI.
 
 ### 2. Impact analysis (análise de impacto)
+
 Usa o **lineage a jusante** (downstream) para responder: *"se eu alterar/descontinuar X, o que quebra?"*
 
 - Lista **tabelas, colunas, dashboards, modelos de ML e donos** afetados.
@@ -35,15 +37,18 @@ Usa o **lineage a jusante** (downstream) para responder: *"se eu alterar/descont
 - **Análise reversa (upstream)** — raiz de causa de um número errado.
 
 ### 3. Governança acionável
+
 - **Ownership**, **classificação/PII**, **políticas** (mascaramento/acesso por tag), **retenção**,
   **glossário** de negócio ligado aos ativos ([governança](../../25-data-governance/README.md)).
 - **Fluxo de pedido de acesso** a partir do catálogo (aprovação pelo dono).
 - **Certificação** e ciclo de vida (rascunho → certificado → depreciado).
 
 ### 4. Colaboração
+
 Comentários, Q&A, tags, favoritos, documentação compartilhada ([metadados sociais](../01-metadata-types/README.md)).
 
 ### 5. Qualidade e observabilidade
+
 Exibe resultados de testes ([dbt/GX](../../12-data-quality/README.md)), frescor/SLO
 ([observability](../../24-observability/06-data-freshness/README.md)), anomalias e incidentes por ativo.
 

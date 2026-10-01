@@ -25,11 +25,13 @@ Plataformas centralizadas escalam mal organizacionalmente:
 ## Os 4 princípios
 
 ### 1. Domain ownership (propriedade orientada a domínio)
+
 Os **times de domínio** (vendas, logística, risco) são **donos** dos dados analíticos do seu contexto —
 responsáveis por produzi-los, mantê-los e evoluí-los. Alinha-se a **DDD** (bounded contexts). Move a
 responsabilidade para **quem melhor conhece** o dado ([ownership](../../25-data-governance/04-ownership-stewardship/README.md)).
 
 ### 2. Data as a product (dados como produto)
+
 Cada conjunto de dados exposto é um **data product**, com mentalidade de produto: **descobrível,
 endereçável, confiável, auto-descritivo, interoperável, seguro**, com **dono**, **SLAs**, **contrato** e
 **documentação**. Consumidores são **clientes**.
@@ -42,12 +44,14 @@ Portas: saída (tabelas/tópicos/APIs) · descoberta (catálogo) · observabilid
 Ver [contratos de dados](../../29-data-contracts/README.md) como **interface** do produto.
 
 ### 3. Self-serve data platform
+
 Um **time de plataforma** oferece **infraestrutura, ferramentas e "caminhos pavimentados"** que reduzem o
 custo cognitivo dos domínios criarem data products: templates, IaC, pipelines/CI, catálogo, observabilidade,
 qualidade, segurança embutidas (*platform as a product* — [plataforma](../../22-infrastructure-as-code/README.md),
 [DataOps](../../23-cicd-dataops/05-dataops/README.md)). Sem isso, a descentralização vira caos.
 
 ### 4. Federated computational governance
+
 Governança **federada**: padrões **globais** (interoperabilidade, segurança, privacidade, formatos,
 identificação de entidades) definidos por um conselho com representantes dos domínios e **aplicados de
 forma automatizada ("computacional")** pela plataforma (policy-as-code), mantendo autonomia local

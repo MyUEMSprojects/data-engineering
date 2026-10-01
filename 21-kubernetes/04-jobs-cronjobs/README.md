@@ -51,6 +51,7 @@ spec:
 ```yaml
 spec: {completions: 10, parallelism: 3}   # 10 tarefas, 3 por vez
 ```
+
 Cada Pod pode processar uma partição/arquivo (índice via `JOB_COMPLETION_INDEX` com *indexed jobs*) —
 equivalente ao fan-out de [DAGs](../../10-data-pipelines/02-dags-dependencies/README.md).
 
@@ -98,6 +99,7 @@ for d in $(seq -w 1 31); do
   kubectl create job backfill-2024-01-$d --image=ghcr.io/org/pipeline:1.4.2 -- --date 2024-01-$d
 done
 ```
+
 (Idempotência por partição torna isso seguro — [backfill](../../09-etl-elt/08-backfill/README.md).)
 
 ## Erros comuns

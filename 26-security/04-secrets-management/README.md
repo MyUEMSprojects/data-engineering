@@ -1,7 +1,7 @@
 # Gestão de secrets e credenciais
 
 > 🟣 Production · Parte de [26 — Security](../README.md)
-
+>
 > Aplicação em cloud/K8s/IaC em [IAM e secrets](../../19-cloud/06-iam-secrets/README.md),
 > [K8s Secrets](../../21-kubernetes/05-configmaps-secrets/README.md) e
 > [IaC secrets](../../22-infrastructure-as-code/05-environments-secrets/README.md). Aqui: princípios.
@@ -40,6 +40,7 @@ cred = json.loads(boto3.client("secretsmanager").get_secret_value(SecretId="prod
 ```
 
 ### Dynamic secrets (Vault e similares)
+
 Em vez de uma senha fixa, o sistema **gera credenciais efêmeras sob demanda** (usuário de banco com TTL de
 1h) e as **revoga** — reduz a janela de exposição e elimina rotação manual.
 
@@ -62,6 +63,7 @@ Em vez de uma senha fixa, o sistema **gera credenciais efêmeras sob demanda** (
 - Mascarar em UIs/outputs (`sensitive`).
 
 ### Se um secret vazou
+
 1. **Revogue/rotacione imediatamente** (apagar do histórico do Git **não basta** — considere comprometido).
 2. **Investigue o uso** (logs de auditoria) por acessos indevidos.
 3. Remova do histórico (BFG/`git filter-repo`) como higiene, e **corrija a causa** (pre-commit, scanning).

@@ -20,11 +20,14 @@
   (biometria). **MFA** combina ≥ 2 fatores — reduz drasticamente o risco de credenciais roubadas.
 
 ### Para humanos
+
 - **SSO** (Single Sign-On) via IdP corporativo (Entra ID, Okta, Google Workspace) com **SAML/OIDC**; **MFA**
   obrigatório; sem contas compartilhadas; ciclo de vida atrelado ao RH (desligou, perdeu acesso).
 
 ### Para máquinas/serviços (workloads)
+
 Pipelines, jobs e serviços também precisam se autenticar:
+
 - **Preferir identidade gerenciada/federada** (roles IAM, Service Accounts, Managed Identities, IRSA/
   Workload Identity, OIDC no CI) → **credenciais temporárias**, sem segredo estático ([IAM](../02-iam/README.md)).
 - Quando inevitável (SaaS de terceiros): **tokens/API keys** em [secret manager](../04-secrets-management/README.md),
@@ -32,6 +35,7 @@ Pipelines, jobs e serviços também precisam se autenticar:
 - **mTLS** (certificados mútuos) para serviço↔serviço sensível.
 
 ### Protocolos comuns
+
 | Protocolo | Uso |
 | --- | --- |
 | **OAuth 2.0** | **autorização delegada** (um app acessa recursos em nome do usuário/serviço; tokens de acesso) |
@@ -44,6 +48,7 @@ Pipelines, jobs e serviços também precisam se autenticar:
 ## Autorização
 
 ### Modelos
+
 - **RBAC** — permissões por **papel** (role) atribuídos a usuários/grupos.
 - **ABAC** — decisão por **atributos** (usuário, recurso, ambiente, finalidade).
 - **ACLs** — listas por recurso (quem pode o quê); difícil de escalar.
@@ -51,6 +56,7 @@ Pipelines, jobs e serviços também precisam se autenticar:
 - **Row/column-level security** em dados ([acesso/classificação](../../25-data-governance/05-access-control-classification/README.md)).
 
 ### Princípios
+
 - **Menor privilégio** e **negar por padrão** ([least privilege](../06-least-privilege/README.md)).
 - **Separação de funções**; **just-in-time access** (acesso temporário elevado com aprovação).
 - **Autorizar em cada camada**: API, warehouse, lake, BI, broker (ACLs de Kafka).

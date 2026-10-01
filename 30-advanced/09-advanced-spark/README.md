@@ -1,7 +1,7 @@
 # Spark avançado
 
 > 🟣 Advanced · Parte de [30 — Advanced](../README.md) · *Natureza: aprofundamento de ferramenta essencial*
-
+>
 > Pré-requisito: [módulo 16](../../16-distributed-processing/README.md) (Spark, shuffle, Catalyst, tuning).
 > Aqui, o que aparece quando os jobs ficam **grandes, caros e críticos**. Confira versões (comportamentos
 > e configs mudam entre Spark 3.x e 4.x).
@@ -9,6 +9,7 @@
 ## 1. Entendendo a execução em profundidade
 
 ### Plano de execução e Spark UI
+
 - `df.explain("formatted")` / `explain("cost")`: leia **plano lógico → otimizado → físico**, `Exchange`,
   `BroadcastHashJoin`/`SortMergeJoin`, `PushedFilters`, `AQE`.
 - **Spark UI**: aba **SQL/DataFrame** (métricas por operador: linhas, spill, tempo), **Stages** (skew por
@@ -17,10 +18,12 @@
   Datadog) para tendências.
 
 ### Modelo de memória (executor)
+
 ```text
 Heap do executor = reservada + (spark.memory.fraction) {execução ⇄ storage (compartilhadas)} + user memory
 + memoryOverhead (off-heap: PySpark/Arrow, buffers, native)
 ```
+
 - **Execução** (shuffle/join/sort/agg) e **storage** (cache/broadcast) disputam a região unificada.
 - **OOM** frequentes vêm de: partições grandes/skew, `collect`, broadcast grande, **PySpark** sem
   `memoryOverhead` suficiente, UDFs/pandas UDFs com batches grandes.

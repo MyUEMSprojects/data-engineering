@@ -58,6 +58,7 @@ for f in ["t.csv", "t_snappy.parquet", "t_zstd.parquet"]:
     col = pc.read_csv(f)["amount"] if f.endswith(".csv") else pq.read_table(f, columns=["amount"])["amount"]
     print(f"{f:18} {os.path.getsize(f)/1e6:7.1f} MB  leitura de 'amount': {time.perf_counter()-s:.3f}s")
 ```
+
 Resultado típico (1 M linhas, 3 colunas): CSV ≈ 34 MB, Parquet+snappy ≈ 13 MB, +zstd ≈ 9 MB, e leitura de uma coluna mais rápida em Parquet (a diferença cresce com o nº de colunas); **zstd** comprime mais que snappy (mais CPU). Dados aleatórios comprimem mal — repita com dados reais. Ver [compressão](../../08-data-formats/09-compression/README.md).
 </details>
 

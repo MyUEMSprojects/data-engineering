@@ -33,6 +33,7 @@ ON CONFLICT (order_id) DO UPDATE
    SET status = EXCLUDED.status, amount = EXCLUDED.amount, updated_at = EXCLUDED.updated_at
  WHERE EXCLUDED.updated_at >= orders.updated_at;
 ```
+
 Reexecutar o mesmo lote não duplica e um evento atrasado não sobrescreve um mais novo. Implementado no [Projeto 01](../../projects/01-basic-etl/README.md). Ver [idempotência](../../09-etl-elt/07-idempotency-retries/README.md).
 </details>
 
@@ -57,6 +58,7 @@ SELECT * EXCLUDE (rn) FROM (
   FROM events e
 ) t WHERE rn = 1;
 ```
+
 (`EXCLUDE (rn)` é DuckDB; BigQuery usa `EXCEPT (rn)`; em PostgreSQL liste as colunas. Verificado no DuckDB.) `DISTINCT *` só remove linhas **idênticas em todas as colunas** — duplicatas reentregues têm `ingested_at` diferente e passam. A chave de negócio (`event_id`) + critério de desempate é que define "duplicado". Ver [deduplicação](../../09-etl-elt/09-deduplication/README.md).
 </details>
 

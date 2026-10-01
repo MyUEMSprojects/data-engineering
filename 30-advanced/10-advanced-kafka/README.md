@@ -1,7 +1,7 @@
 # Kafka avançado
 
 > 🟣 Advanced · Parte de [30 — Advanced](../README.md) · *Natureza: aprofundamento de ferramenta essencial*
-
+>
 > Pré-requisito: [módulo 18](../../18-message-brokers/README.md). Aqui: **internals, garantias e operação em
 > escala**. Versões atuais usam **KRaft** (sem ZooKeeper); confira recursos/configs da sua versão.
 
@@ -36,10 +36,12 @@ High Watermark (HW) = offset mais alto replicado a TODAS as ISR → só até o H
 ## 3. Garantias: idempotência, transações e exactly-once
 
 ### Producer idempotente
+
 `enable.idempotence=true`: o broker deduplica por **Producer ID + sequence number** por partição ⇒ sem
 duplicatas/reordenação por retries **dentro de uma sessão** (padrão em clients modernos).
 
 ### Transações
+
 `transactional.id` permite **escrever atomicamente em várias partições/tópicos** e **commitar offsets de
 consumo** na mesma transação (**consume-transform-produce**):
 
@@ -50,6 +52,7 @@ producer.produce("saida", key, value)
 producer.send_offsets_to_transaction(offsets, consumer.consumer_group_metadata())
 producer.commit_transaction()      # tudo ou nada: saída + offsets
 ```
+
 - Consumidores usam `isolation.level=read_committed` para **não ver** mensagens de transações abortadas.
 - Base do **exactly-once** do [Kafka Streams](../../17-streaming/06-kafka-streams/README.md)
   (`exactly_once_v2`) e de pipelines Flink→Kafka (2PC no sink).

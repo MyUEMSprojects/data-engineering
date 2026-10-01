@@ -1,7 +1,7 @@
 # Mascaramento de dados e PII
 
 > 🟣 Production · Parte de [26 — Security](../README.md)
-
+>
 > ⚠️ Conteúdo educacional; consulte jurídico/DPO para decisões de conformidade.
 
 ## O que é

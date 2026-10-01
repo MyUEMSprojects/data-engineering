@@ -1,7 +1,7 @@
 # Lineage (visão de governança)
 
 > 🟣 Production · Parte de [25 — Data Governance](../README.md)
-
+>
 > A mecânica de captura em pipelines está em [data lineage](../../10-data-pipelines/06-data-lineage/README.md)
 > e as ferramentas em [27 — lineage/column lineage](../../27-data-catalog-metadata/02-lineage-column-lineage/README.md).
 > Aqui: **por que governança precisa de lineage** e como usá-lo.

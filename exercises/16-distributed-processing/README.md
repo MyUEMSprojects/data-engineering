@@ -30,6 +30,7 @@ Uma tabela de fatos (2 bilhões de linhas) junta com uma dimensão de 50 mil lin
 from pyspark.sql import functions as F
 out = facts.join(F.broadcast(dim), "product_id")
 ```
+
 O plano troca `SortMergeJoin` (shuffle dos **dois** lados) por `BroadcastHashJoin`: a dimensão é enviada a cada executor e o lado grande **não sofre shuffle**. Limite: a dimensão precisa caber na memória do executor (`autoBroadcastJoinThreshold`). Medido no [Projeto 06](../../projects/06-spark/README.md) (E2).
 </details>
 
@@ -56,6 +57,7 @@ ev = events.withColumn("salt", F.when(is_hot, F.floor(F.rand() * B).cast("int"))
 us = users.withColumn("salt", F.explode(F.when(is_hot, F.sequence(F.lit(0), F.lit(B - 1))).otherwise(F.array(F.lit(0)))))
 out = ev.join(us, ["user_id", "salt"], "left").drop("salt")
 ```
+
 Só a chave quente é replicada B× no lado pequeno. Código completo e testado (equivalência com o join comum) em [`transforms.py`](../../projects/06-spark/src/sparkjobs/transforms.py).
 </details>
 
