@@ -1,0 +1,22 @@
+# Observabilidade dos dados: exporter (serve out/metrics/dq.prom) + Prometheus (coleta + alertas).
+# Gere métricas antes:  python -m dqpipe demo
+services:
+  exporter:
+    image: python:3.12-slim
+    working_dir: /app
+    environment:
+      PYTHONPATH: /app/src
+    command: ["python", "-m", "dqpipe.exporter", "--metrics", "/app/out/metrics/dq.prom", "--port", "9108"]
+    volumes:
+      - ./src:/app/src:ro
+      - ./out:/app/out:ro
+    ports: ["${EXPORTER_PORT:-9108}:9108"]
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=1d"]
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports: ["${PROMETHEUS_PORT:-9090}:9090"]
+    depends_on: [exporter]

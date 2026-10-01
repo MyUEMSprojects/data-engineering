@@ -1,0 +1,42 @@
+# Contrato de dados do dataset `orders` (ver módulo 29 do repositório).
+# Descreve schema, garantias de qualidade e SLAs; é EXECUTADO pelo pipeline (não é só documentação).
+dataset: orders
+version: 1.2.0
+owner: time-pedidos@empresa.com
+description: "Um registro por pedido confirmado (grão: pedido)."
+
+partition_column: created_at      # a partição do lote é a data (UTC) desta coluna
+
+schema:
+  allow_extra_columns: false
+  columns:
+    - {name: order_id,    type: VARCHAR,   required: true}
+    - {name: customer_id, type: VARCHAR,   required: true}
+    - {name: amount,      type: DOUBLE,    required: true}
+    - {name: status,      type: VARCHAR,   required: true}
+    - {name: uf,          type: VARCHAR,   required: false}
+    - {name: created_at,  type: TIMESTAMP, required: true}
+
+# Se mais que isto das linhas forem para a quarentena, o lote INTEIRO é bloqueado
+# (algo está errado na origem — não vale publicar o "resto").
+max_quarantine_rate: 0.05
+
+checks:
+  # ---- nível LINHA (linhas ruins vão para a quarentena) ----
+  - {id: customer_not_null,   level: row, type: not_null,        column: customer_id, severity: hard}
+  - {id: amount_range,        level: row, type: range,           column: amount, min: 0, max: 100000, severity: hard}
+  - {id: status_domain,       level: row, type: accepted_values, column: status,
+     values: [created, paid, shipped, canceled], severity: hard}
+  - {id: uf_domain,           level: row, type: accepted_values, column: uf,
+     values: [SP, RJ, MG, RS, PR, BA, SC, PE], severity: soft}
+  # ---- nível DATASET (qualquer falha HARD bloqueia o lote) ----
+  - {id: pk_unique,           level: dataset, type: unique,      columns: [order_id], severity: hard}
+  - {id: volume_in_range,     level: dataset, type: row_count_between, min: 600, max: 1600, severity: hard}
+  - {id: freshness,           level: dataset, type: freshness,   column: created_at, max_age_hours: 26, severity: hard}
+  - {id: uf_null_rate,        level: dataset, type: null_rate_max, column: uf, max: 0.02, severity: soft}
+  # ---- anomalias vs histórico (robustas: mediana/MAD; só olham lotes JÁ publicados) ----
+  - {id: volume_anomaly,      level: dataset, type: anomaly_row_count, z_max: 5, min_history: 5, severity: soft}
+  - {id: amount_mean_anomaly, level: dataset, type: anomaly_mean, column: amount, z_max: 5, min_history: 5, severity: soft}
+
+sla:
+  freshness_hours: 26

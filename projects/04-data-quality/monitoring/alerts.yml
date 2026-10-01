@@ -1,0 +1,44 @@
+# Alertas sobre os DADOS (não só sobre a infraestrutura). Cada alerta tem causa, impacto e ação.
+groups:
+  - name: data-quality
+    rules:
+      - alert: DQGateBlocked
+        expr: dq_gate_blocked == 1
+        labels: {severity: page}
+        annotations:
+          summary: "Lote de {{ $labels.dataset }} BLOQUEADO pelo gate de qualidade"
+          description: "Nada foi publicado; consumidores seguem na última partição boa. Veja o relatório do run (reasons)."
+          runbook: "docs: README > Runbook > lote bloqueado"
+
+      - alert: DQHardCheckFailed
+        expr: dq_check_passed{severity="hard"} == 0
+        labels: {severity: page}
+        annotations:
+          summary: "Check HARD '{{ $labels.check }}' falhou em {{ $labels.dataset }}"
+
+      - alert: DQSoftCheckFailed
+        expr: dq_check_passed{severity="soft"} == 0
+        for: 1m
+        labels: {severity: ticket}
+        annotations:
+          summary: "Aviso: check soft '{{ $labels.check }}' falhando em {{ $labels.dataset }} (não bloqueia)"
+
+      - alert: DQQuarantineRateHigh
+        expr: dq_rows{state="quarantined"} / dq_rows{state="read"} > 0.02
+        labels: {severity: ticket}
+        annotations:
+          summary: "{{ $labels.dataset }}: >2% das linhas na quarentena"
+
+      - alert: DQDataStale
+        expr: dq_data_age_seconds > 26 * 3600
+        labels: {severity: page}
+        annotations:
+          summary: "{{ $labels.dataset }}: dado mais recente tem mais de 26h (SLA de frescor)"
+
+      # Dead man's switch: se o pipeline NÃO roda, nenhum check falha — ausência de sinal é o sinal.
+      - alert: DQPipelineNotRunning
+        expr: time() - dq_last_run_timestamp_seconds > 26 * 3600
+        labels: {severity: page}
+        annotations:
+          summary: "{{ $labels.dataset }}: o pipeline de qualidade não roda há mais de 26h"
+          description: "(No demo os relógios são SIMULADOS em 2024, então este alerta dispara — comportamento esperado.)"
