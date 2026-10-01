@@ -1,0 +1,29 @@
+# pipeline (job) + servidor de métricas + Prometheus com as regras de alerta. Portas: METRICS_PORT, PROMETHEUS_PORT.
+x-pipeline: &pipeline
+  build: .
+  image: capstone:local
+  volumes:
+    - lake:/lake
+
+services:
+  pipeline:
+    <<: *pipeline
+    profiles: ["job"]
+
+  metrics:
+    <<: *pipeline
+    command: ["serve-metrics"]
+    ports:
+      - "127.0.0.1:${METRICS_PORT:-9109}:9109"
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
+    ports:
+      - "127.0.0.1:${PROMETHEUS_PORT:-9090}:9090"
+    depends_on: [metrics]
+
+volumes:
+  lake:

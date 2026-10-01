@@ -1,0 +1,38 @@
+groups:
+  - name: capstone
+    rules:
+      - alert: CapstoneGateBlocked
+        expr: capstone_gate_blocked == 1
+        for: 0m
+        labels: {severity: page}
+        annotations:
+          summary: "Gate de qualidade bloqueou o lote"
+          runbook: "Abra _ops/reports/<ds>.json; confira a quarentena (Delta quarantine/orders); corrija a origem e reexecute o ds (idempotente)."
+
+      - alert: CapstoneRejectRateHigh
+        expr: capstone_reject_rate > 0.03
+        for: 0m
+        labels: {severity: ticket}
+        annotations:
+          summary: "Taxa de rejeição acima de 3% (limite do gate: 5%)"
+
+      - alert: CapstoneRunFailed
+        expr: capstone_run_success == 0
+        for: 0m
+        labels: {severity: page}
+        annotations:
+          summary: "Pipeline do último ds não concluiu (bloqueio ou erro)"
+
+      - alert: CapstoneDataStale
+        expr: capstone_data_freshness_seconds > 36 * 3600
+        for: 5m
+        labels: {severity: page}
+        annotations:
+          summary: "Dado mais novo da silver tem mais de 36 h"
+
+      - alert: CapstonePipelineNotRunning
+        expr: time() - capstone_last_run_timestamp_seconds > 26 * 3600
+        for: 10m
+        labels: {severity: page}
+        annotations:
+          summary: "Nenhuma execução há mais de 26 h (dead man's switch)"
