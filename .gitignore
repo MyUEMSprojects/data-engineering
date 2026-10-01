@@ -40,8 +40,11 @@ htmlcov/
 *.sqlite3
 data/
 datasets/
-!**/sample_data/**          # exceção: amostras pequenas usadas nos exemplos
-!**/fixtures/**             # exceção: fixtures de teste
+# exceções: amostras pequenas e fixtures de teste (versionadas)
+!**/sample_data/
+!**/sample_data/**
+!**/fixtures/
+!**/fixtures/**
 
 # ---- Segredos / ambiente ----
 .env
