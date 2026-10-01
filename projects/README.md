@@ -16,7 +16,7 @@ melhorias), `docker-compose` quando aplicável e testes.
 | 02 | [Analytics Warehouse](02-analytics-warehouse/README.md) | modelagem dimensional + ELT + dbt + PostgreSQL | 🔵 |
 | 03 | [Orquestração](03-orchestration/README.md) | Airflow; DAGs idempotentes; backfill | 🔵 |
 | 04 | [Data Quality](04-data-quality/README.md) | validação + testes + quarentena + observabilidade | 🔵 |
-| 05 | [Data Lake](05-data-lake/README.md) | object storage (MinIO) + Parquet + partitioning + medallion | 🔵 |
+| 05 | [Data Lake](05-data-lake/README.md) | object storage S3 (SeaweedFS local) + Parquet + partitioning + medallion | 🔵 |
 | 06 | [Spark](06-spark/README.md) | processamento distribuído; shuffle/skew; tuning | 🟣 |
 | 07 | [Kafka](07-kafka/README.md) | producer → Kafka → consumer → storage | 🟣 |
 | 08 | [Streaming](08-streaming/README.md) | Kafka → processamento streaming → analytics | 🟣 |

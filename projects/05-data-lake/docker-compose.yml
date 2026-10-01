@@ -1,0 +1,17 @@
+# Object storage S3-compatível, só para estudo local (SeaweedFS: `weed server -s3`).
+# Por que não MinIO? As imagens públicas da edição comunitária do MinIO deixaram de ser publicadas
+# (Docker Hub/Quay); SeaweedFS é open source (Apache-2.0), ativo e fala a API S3.
+# Credenciais de EXEMPLO em s3/identities.json (somente local). Porta configurável: S3_PORT.
+services:
+  s3:
+    image: chrislusf/seaweedfs:latest
+    entrypoint: ["weed"]
+    command: ["server", "-dir=/data", "-s3", "-s3.port=8333", "-s3.config=/etc/seaweedfs/identities.json", "-ip.bind=0.0.0.0"]
+    ports:
+      - "127.0.0.1:${S3_PORT:-8333}:8333"
+    volumes:
+      - lake-data:/data
+      - ./s3/identities.json:/etc/seaweedfs/identities.json:ro
+
+volumes:
+  lake-data:
