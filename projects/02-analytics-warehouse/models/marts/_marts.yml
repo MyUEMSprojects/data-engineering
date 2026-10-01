@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Dimensão de calendário (pré-populada)."
+    columns:
+      - name: date_sk
+        data_tests: [unique, not_null]
+
+  - name: dim_product
+    description: "Produtos (SCD1) + membro 'desconhecido'."
+    columns:
+      - name: product_sk
+        data_tests: [unique, not_null]
+      - name: product_id
+        data_tests: [unique, not_null]
+
+  - name: dim_customer
+    description: >
+      Clientes (SCD2): uma linha por versão. `valid_from/valid_to` delimitam a vigência;
+      `is_current` marca a versão atual.
+    columns:
+      - name: customer_sk
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_tests: [not_null]
+
+  - name: fct_sales
+    description: "Fato de vendas. Grão: item de pedido (order_id + line_no)."
+    data_tests:
+      - dbt_utils_free_unique_combination:
+          arguments: {column_names: [order_id, line_no]}
+    columns:
+      - name: date_sk
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('dim_date'), field: date_sk}}
+      - name: customer_sk
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('dim_customer'), field: customer_sk}}
+      - name: product_sk
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('dim_product'), field: product_sk}}
+      - name: net_amount
+        data_tests: [not_null]

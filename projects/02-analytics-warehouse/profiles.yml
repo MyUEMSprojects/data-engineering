@@ -1,0 +1,14 @@
+# Perfil local. Credenciais de EXEMPLO do docker-compose (não use em outro lugar).
+# Em ambientes reais, injete por variáveis de ambiente/secret manager.
+analytics_warehouse:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: "{{ env_var('DBT_HOST', 'localhost') }}"
+      port: "{{ env_var('DBT_PORT', '5432') | as_number }}"
+      user: "{{ env_var('DBT_USER', 'de') }}"
+      password: "{{ env_var('DBT_PASSWORD', 'de') }}"
+      dbname: "{{ env_var('DBT_DBNAME', 'warehouse') }}"
+      schema: analytics
+      threads: 4

@@ -1,0 +1,25 @@
+name: analytics_warehouse
+version: "1.0.0"
+config-version: 2
+profile: analytics_warehouse
+
+model-paths: ["models"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  analytics_warehouse:
+    staging:
+      +materialized: view      # barato; staging é 1:1 com a fonte
+      +schema: staging
+    marts:
+      +materialized: table     # modelos de consumo: tabelas físicas
+      +schema: marts
+
+snapshots:
+  analytics_warehouse:
+    +target_schema: snapshots

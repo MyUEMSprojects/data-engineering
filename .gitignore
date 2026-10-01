@@ -79,3 +79,8 @@ Thumbs.db
 logs/
 tmp/
 .cache/
+
+# ---- dbt ----
+target/
+dbt_packages/
+.user.yml
