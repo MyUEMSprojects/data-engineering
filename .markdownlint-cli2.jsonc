@@ -1,0 +1,12 @@
+{
+  // Configuração do markdownlint-cli2.
+  "config": {
+    "default": true,
+    "MD013": false, // line-length: permitimos linhas longas (tabelas, URLs)
+    "MD033": false, // HTML inline permitido (ex.: <details>, <br>)
+    "MD041": false, // primeiro bloco não precisa ser H1 (badges)
+    "MD024": { "siblings_only": true }, // headings duplicados só em irmãos
+    "MD029": { "style": "ordered" }
+  },
+  "ignores": ["node_modules", ".git", ".venv", "venv"]
+}

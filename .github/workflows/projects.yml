@@ -1,0 +1,48 @@
+name: Projects
+
+# Testes dos projetos que NÃO precisam de infraestrutura (sem Kafka/Postgres/Spark).
+# Os testes de integração ficam fora (marcados `integration`) e rodam localmente com `docker compose`.
+on:
+  push:
+    branches: [main, build/**]
+    paths: ["projects/**", ".github/workflows/projects.yml"]
+  pull_request:
+    branches: [main]
+    paths: ["projects/**", ".github/workflows/projects.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {project: 01-basic-etl, install: "psycopg[binary] requests", test: "pytest -q -m 'not integration'", pythonpath: src}
+          - {project: 02-analytics-warehouse, install: "", test: "pytest -q pytests", pythonpath: ""}
+          - {project: 03-orchestration, install: "", test: "pytest -q tests/test_orders_lib.py", pythonpath: include}
+          - {project: 04-data-quality, install: "duckdb pyyaml", test: "pytest -q", pythonpath: src}
+          - {project: 05-data-lake, install: "pyarrow duckdb", test: "pytest -q", pythonpath: src}
+          - {project: 07-kafka, install: "confluent-kafka 'psycopg[binary]'", test: "pytest -q -m 'not integration'", pythonpath: src}
+          - {project: 08-streaming, install: "'psycopg[binary]'", test: "pytest -q tests/test_scenario_and_reference.py", pythonpath: src}
+          - {project: 09-cloud, install: "'moto[s3,sqs]' boto3", test: "pytest -q", pythonpath: src}
+          - {project: 10-capstone, install: "deltalake duckdb pyarrow", test: "pytest -q", pythonpath: src}
+    defaults:
+      run:
+        working-directory: projects/${{ matrix.project }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install pytest ruff black ${{ matrix.install }}
+      - name: Ruff
+        run: ruff check .
+      - name: Tests
+        env:
+          PYTHONPATH: ${{ matrix.pythonpath }}
+        run: ${{ matrix.test }}

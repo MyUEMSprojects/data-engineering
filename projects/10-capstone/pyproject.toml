@@ -1,0 +1,22 @@
+[project]
+name = "capstone"
+version = "0.1.0"
+description = "Projeto 10 — capstone: lakehouse Delta + ELT + qualidade + observabilidade + orquestração + CI/CD"
+requires-python = ">=3.11"
+dependencies = ["deltalake>=1.0,<2", "duckdb>=1.1,<2", "pyarrow>=17"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "DTZ"]
+ignore = ["E501"]
+
+[tool.black]
+line-length = 130
+target-version = ["py311"]
